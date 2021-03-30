@@ -338,7 +338,7 @@ func (ipg *IpgHandler) remotePost(addr string, data io.Reader) ([]byte, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	log.Printf("POST: %v  => %v\n", addr, resp.Status)
+	ipg.logger.Printf("POST: %v  => %v\n", addr, resp.Status)
 	responseBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		ipg.logger.Fatalf("Error reading HTTP response: %#v\n", err)
@@ -361,6 +361,6 @@ func (ipg *IpgHandler) forwardCallback(addr string, data io.Reader) error {
 		return err
 	}
 	defer resp.Body.Close()
-	log.Printf("POST: %v  => %v\n", addr, resp.Status)
+	ipg.logger.Printf("POST: %v  => %v\n", addr, resp.Status)
 	return nil
 }
