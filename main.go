@@ -24,8 +24,11 @@ var (
 
 func main() {
 	r := chi.NewRouter()
-	r.Use(middleware.Logger)
 	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
+	r.Use(middleware.StripSlashes)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Heartbeat("/ping"))
 	r.Use(middleware.Recoverer)
 
 	r.Use(cors.Handler(cors.Options{
@@ -58,11 +61,13 @@ func main() {
 	r.Post("/api/v1/vodacash_b2c_callback", handler.B2CCallback)
 	r.Post("/api/v1/c2b_callback", handler.C2BCallback)
 	r.Post("/api/v1/b2c_callback", handler.B2CCallback)
+
+	handler.logger.Printf("Server starting on 0.0.0.0:%s\n", ServPort)
+
 	err := http.ListenAndServe("0.0.0.0:"+ServPort, r)
 	if err != nil {
 		handler.logger.Fatal(err)
 	}
-	handler.logger.Printf("Server started on 0.0.0.0:%s\n", ServPort)
 
 }
 
