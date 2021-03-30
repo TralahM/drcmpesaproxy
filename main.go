@@ -18,8 +18,8 @@ import (
 
 var (
 	ServPort       = getEnv("PORT", "8000")
-	c2bCallbackUrl = getEnv("CLIENT_C2B_CALLBACK_URL", "https://api.betmondenge.com/en/vodacash_c2b_callback")
-	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://api.betmondenge.com/en/vodacash_b2c_callback")
+	c2bCallbackUrl = getEnv("CLIENT_C2B_CALLBACK_URL", "https://api.betmondenge.com/en/api/c2b_vodacash")
+	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://api.betmondenge.com/en/api/b2c_vodacash")
 )
 
 func main() {
@@ -55,6 +55,8 @@ func main() {
 	r.Post("/api/v1/b2c", handler.B2C)
 	r.Post("/api/v1/vodacash_c2b_callback", handler.C2BCallback)
 	r.Post("/api/v1/vodacash_b2c_callback", handler.B2CCallback)
+	r.Post("/api/v1/c2b_callback", handler.C2BCallback)
+	r.Post("/api/v1/b2c_callback", handler.B2CCallback)
 	err := http.ListenAndServe("0.0.0.0:"+ServPort, r)
 	if err != nil {
 		handler.logger.Fatal(err)
