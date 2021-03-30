@@ -369,7 +369,7 @@ func (ipg *IpgHandler) forwardCallback(addr string, data io.Reader) error {
 		ipg.logger.Fatalf("Error creating request: %#v\n", err)
 		return err
 	}
-	client := Decorate(http.DefaultClient, Header("Content-Type", "application/json;charset=utf8"))
+	client := Decorate(http.DefaultClient, Header("Content-Type", "application/json"))
 	resp, err := client.Do(request)
 	if err != nil {
 		ipg.logger.Fatalf("Error sending request: %#v\n", err)
