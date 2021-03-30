@@ -377,5 +377,9 @@ func (ipg *IpgHandler) forwardCallback(addr string, data io.Reader) error {
 	}
 	defer resp.Body.Close()
 	ipg.logger.Printf("POST: %v  => %v\n", addr, resp.Status)
+	if resp.StatusCode == 500 {
+		body, err := ioutil.ReadAll(resp.Body)
+		ipg.logger.Printf("Traceback:\n %v\n%v\n", string(body), err)
+	}
 	return nil
 }
