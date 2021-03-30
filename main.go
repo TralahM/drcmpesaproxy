@@ -42,8 +42,9 @@ func main() {
 			"X-Client-C2BCallbackURL",
 			"X-Client-B2CCallbackURL",
 			"X-Client-ThirdPartyReference",
+			"Environment",
 		},
-		ExposedHeaders:   []string{"Link"},
+		ExposedHeaders:   []string{"Link", "RequestID"},
 		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
@@ -106,13 +107,15 @@ type IpgHandler struct {
 	Token    string
 	client   Client
 	logger   *log.Logger
+	sandbox  bool
 }
 
 func NewIpgHandler() *IpgHandler {
-	logger := log.New(os.Stdout, "drcmpesaproxy: ", log.LstdFlags|log.Lshortfile)
+	logger := log.New(os.Stdout, "drcmpesaproxy: ", log.Ldate|log.Ltime|log.Lshortfile)
 	hs := &IpgHandler{
-		client: Decorate(http.DefaultClient, Header("Accept", "application/xml,text/xml")),
-		logger: logger,
+		client:  Decorate(http.DefaultClient, Header("Accept", "application/xml,text/xml")),
+		logger:  logger,
+		sandbox: false,
 	}
 	return hs
 }
@@ -121,6 +124,15 @@ func (ipg *IpgHandler) getIpgUrl(sandbox bool) string {
 		return "https://uatipg.m-pesa.vodacom.cd"
 	}
 	return "https://ipg.m-pesa.vodacom.cd"
+}
+
+func (ipg *IpgHandler) setEnv(req *http.Request) {
+	env := req.Header.Get("Environment")
+	if env == "" || env == "live" || env == "production" {
+		ipg.sandbox = false
+	} else {
+		ipg.sandbox = true
+	}
 }
 
 func (ipg *IpgHandler) Health(w http.ResponseWriter, req *http.Request) {
@@ -145,6 +157,7 @@ func (ipg *IpgHandler) Login(w http.ResponseWriter, req *http.Request) {
 		ipg.respondError(w, http.StatusBadRequest, string([]byte(err.Error())))
 		return
 	}
+	ipg.setEnv(req)
 	loginresponse, err := ipg.ipgLogin(login)
 	if err != nil {
 		ipg.logger.Printf("Error reading body: %v\n", err)
@@ -169,6 +182,7 @@ func (ipg *IpgHandler) C2B(w http.ResponseWriter, req *http.Request) {
 		ipg.respondError(w, http.StatusBadRequest, string([]byte(err.Error())))
 		return
 	}
+	ipg.setEnv(req)
 	c2bresponse, err := ipg.ipgC2B(c2b)
 	if err != nil {
 		ipg.logger.Printf("Error reading body: %v\n", err)
@@ -193,6 +207,7 @@ func (ipg *IpgHandler) B2C(w http.ResponseWriter, req *http.Request) {
 		ipg.respondError(w, http.StatusBadRequest, string([]byte(err.Error())))
 		return
 	}
+	ipg.setEnv(req)
 	b2cresponse, err := ipg.ipgB2C(b2c)
 	if err != nil {
 		ipg.logger.Printf("Error reading body: %v\n", err)
