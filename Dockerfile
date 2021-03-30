@@ -1,4 +1,6 @@
 FROM golang as build
+ENV PORT 8080
+EXPOSE 8080
 
 WORKDIR /go/src/app
 COPY . .
