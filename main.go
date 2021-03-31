@@ -466,7 +466,7 @@ func (ipg *IpgHandler) B2C(w http.ResponseWriter, req *http.Request) {
 // @Tags c2b
 // @Accept xml
 // @Produce xml
-// @Param credentials body C2BCallbackEnvelope true "C2B"
+// @Param c2bcallback body C2BCallbackEnvelope true "C2B"
 // @Success 200 {object} C2BAcknowledgement
 // @Router /api/v1/c2b_callback [post]
 func (ipg *IpgHandler) C2BCallback(w http.ResponseWriter, req *http.Request) {
@@ -499,7 +499,7 @@ func (ipg *IpgHandler) C2BCallback(w http.ResponseWriter, req *http.Request) {
 // @Tags b2c
 // @Accept xml
 // @Produce xml
-// @Param credentials body B2CCallbackEnvelope true "B2C"
+// @Param b2ccallback body B2CCallbackEnvelope true "B2C"
 // @Success 200 {object} B2CAcknowledgement
 // @Router /api/v1/b2c_callback [post]
 func (ipg *IpgHandler) B2CCallback(w http.ResponseWriter, req *http.Request) {

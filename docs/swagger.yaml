@@ -344,7 +344,7 @@ paths:
       parameters:
       - description: B2C
         in: body
-        name: credentials
+        name: b2ccallback
         required: true
         schema:
           $ref: '#/definitions/main.B2CCallbackEnvelope'
@@ -389,7 +389,7 @@ paths:
       parameters:
       - description: C2B
         in: body
-        name: credentials
+        name: c2bcallback
         required: true
         schema:
           $ref: '#/definitions/main.C2BCallbackEnvelope'

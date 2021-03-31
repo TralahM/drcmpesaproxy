@@ -82,7 +82,7 @@ var doc = `{
                 "parameters": [
                     {
                         "description": "B2C",
-                        "name": "credentials",
+                        "name": "b2ccallback",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -150,7 +150,7 @@ var doc = `{
                 "parameters": [
                     {
                         "description": "C2B",
-                        "name": "credentials",
+                        "name": "c2bcallback",
                         "in": "body",
                         "required": true,
                         "schema": {
