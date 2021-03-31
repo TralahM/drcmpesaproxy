@@ -27,6 +27,26 @@ definitions:
       transactionDateTime:
         type: string
     type: object
+  main.B2CAcknowledgement:
+    properties:
+      dataItem:
+        items:
+          properties:
+            name:
+              type: string
+            text:
+              type: string
+            type:
+              type: string
+            value:
+              type: string
+          type: object
+        type: array
+      text:
+        type: string
+      xmlname:
+        $ref: '#/definitions/main.Name'
+    type: object
   main.B2CCallbackEnvelope:
     properties:
       body:
@@ -142,6 +162,24 @@ definitions:
         type: string
       token:
         type: string
+    type: object
+  main.C2BAcknowledgement:
+    properties:
+      dataItem:
+        properties:
+          name:
+            type: string
+          text:
+            type: string
+          type:
+            type: string
+          value:
+            type: string
+        type: object
+      text:
+        type: string
+      xmlname:
+        $ref: '#/definitions/main.Name'
     type: object
   main.C2BCallbackEnvelope:
     properties:
@@ -316,7 +354,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.B2CResponse'
+            $ref: '#/definitions/main.B2CAcknowledgement'
       summary: Handle CallBack for a Customer to Business Transaction
       tags:
       - b2c
@@ -361,7 +399,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.C2BResponse'
+            $ref: '#/definitions/main.C2BAcknowledgement'
       summary: Handle CallBack for a Customer to Business Transaction
       tags:
       - c2b

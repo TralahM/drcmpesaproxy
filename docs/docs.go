@@ -94,7 +94,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.B2CResponse"
+                            "$ref": "#/definitions/main.B2CAcknowledgement"
                         }
                     }
                 }
@@ -162,7 +162,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.C2BResponse"
+                            "$ref": "#/definitions/main.C2BAcknowledgement"
                         }
                     }
                 }
@@ -309,6 +309,37 @@ var doc = `{
                 },
                 "transactionDateTime": {
                     "type": "string"
+                }
+            }
+        },
+        "main.B2CAcknowledgement": {
+            "type": "object",
+            "properties": {
+                "dataItem": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "text": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "text": {
+                    "type": "string"
+                },
+                "xmlname": {
+                    "$ref": "#/definitions/main.Name"
                 }
             }
         },
@@ -487,6 +518,34 @@ var doc = `{
                 },
                 "token": {
                     "type": "string"
+                }
+            }
+        },
+        "main.C2BAcknowledgement": {
+            "type": "object",
+            "properties": {
+                "dataItem": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "text": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "text": {
+                    "type": "string"
+                },
+                "xmlname": {
+                    "$ref": "#/definitions/main.Name"
                 }
             }
         },
