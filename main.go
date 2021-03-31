@@ -61,7 +61,7 @@ func main() {
 
 	r.Use(cors.Handler(cors.Options{
 		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
-		AllowedOrigins: []string{"https://*", "http://*"},
+		AllowedOrigins: []string{"https://*", "http://*", "*"},
 		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{
@@ -89,7 +89,7 @@ func main() {
 	r.Post("/api/v1/vodacash_b2c_callback", handler.B2CCallback)
 	r.Post("/api/v1/c2b_callback", handler.C2BCallback)
 	r.Post("/api/v1/b2c_callback", handler.B2CCallback)
-	r.Get("/swagger/", httpSwagger.Handler(httpSwagger.URL("https://ipg.betmondenge.com/swagger/doc.json"))) // url pointing to api definition
+	r.Get("/swagger/*", httpSwagger.Handler(httpSwagger.URL("https://ipg.betmondenge.com/swagger/swagger.json"))) // url pointing to api definition
 
 	handler.logger.Printf("Server starting on 0.0.0.0:%s\n", ServPort)
 
