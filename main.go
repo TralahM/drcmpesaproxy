@@ -13,6 +13,8 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	httpSwagger "github.com/swaggo/http-swagger"
+	_ "github.com/tralahm/drcmpesaproxy/docs"
 	"github.com/tralahm/vodacomgo"
 )
 
@@ -22,6 +24,32 @@ var (
 	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://api.betmondenge.com/en/api/b2c_vodacash/")
 )
 
+type Login struct {
+	Username string
+	Password string
+}
+
+type LoginResponse struct {
+	Code          string `json:"code"`
+	Description   string `json:"description"`
+	Detail        string `json:"detail"`
+	TransactionID string `json:"transactionID"`
+	EventID       string `json:"event_id"`
+	Username      string `json:"Username"`
+	Password      string `json:"Password"`
+	SessionID     string `json:"SessionID"`
+}
+
+// @title DRC Mpesa Proxy (JSON-SOAP-JSON) API
+// @version 1.0
+// @description This is a service for interacting with Vodacom's DRC MPESA SOAP Integrated Payment Gateway.
+// @termsOfService https://blog.tralahm.com
+// @contact.name API Support
+// @contact.email briantralah@gmail.com
+// @license.name GNU GENERAL PUBLIC LICENSE
+// @license.url http://www.gnu.org/licenses/
+// @host ipg.betmondenge.com
+// @BasePath /
 func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.RequestID)
@@ -61,6 +89,7 @@ func main() {
 	r.Post("/api/v1/vodacash_b2c_callback", handler.B2CCallback)
 	r.Post("/api/v1/c2b_callback", handler.C2BCallback)
 	r.Post("/api/v1/b2c_callback", handler.B2CCallback)
+	r.Get("/swagger", httpSwagger.WrapHandler)
 
 	handler.logger.Printf("Server starting on 0.0.0.0:%s\n", ServPort)
 
@@ -140,6 +169,13 @@ func (ipg *IpgHandler) setEnv(req *http.Request) {
 	}
 }
 
+// GetHealth godoc
+// @Summary Check Health Status
+// @Tags health
+// @Accept json
+// @Produce json
+// @Success 200 {object} map[string]string
+// @Router /api/v1/health [get]
 func (ipg *IpgHandler) Health(w http.ResponseWriter, req *http.Request) {
 	ipg.respondJSON(w, 200, map[string]string{"status": "healthy"})
 }
@@ -148,6 +184,15 @@ func (ipg *IpgHandler) Ready(w http.ResponseWriter, req *http.Request) {
 	ipg.respondJSON(w, 200, map[string]string{"status": "ready"})
 }
 
+// Login godoc
+// @Summary Authenticate against the Remote IPG
+// @Description Login to the MPESA Ipg with the credentials and return JSON response.
+// @Tags login
+// @Accept json
+// @Produce json
+// @Param credentials body Login true "Login"
+// @Success 201 {object} LoginResponse
+// @Router /api/v1/login [post]
 func (ipg *IpgHandler) Login(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {

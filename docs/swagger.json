@@ -1,0 +1,122 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a service for interacting with Vodacom's DRC MPESA SOAP Integrated Payment Gateway.",
+        "title": "DRC Mpesa Proxy (JSON-SOAP-JSON) API",
+        "termsOfService": "https://blog.tralahm.com",
+        "contact": {
+            "name": "API Support",
+            "email": "briantralah@gmail.com"
+        },
+        "license": {
+            "name": "GNU GENERAL PUBLIC LICENSE",
+            "url": "http://www.gnu.org/licenses/"
+        },
+        "version": "1.0"
+    },
+    "host": "ipg.betmondenge.com",
+    "basePath": "/",
+    "paths": {
+        "/api/v1/health": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health"
+                ],
+                "summary": "Check Health Status",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "description": "Login to the MPESA Ipg with the credentials and return JSON response.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "login"
+                ],
+                "summary": "Authenticate against the Remote IPG",
+                "parameters": [
+                    {
+                        "description": "Login",
+                        "name": "credentials",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/main.LoginResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.Login": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "Password": {
+                    "type": "string"
+                },
+                "SessionID": {
+                    "type": "string"
+                },
+                "Username": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                },
+                "event_id": {
+                    "type": "string"
+                },
+                "transactionID": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

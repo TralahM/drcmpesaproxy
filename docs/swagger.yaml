@@ -1,0 +1,81 @@
+basePath: /
+definitions:
+  main.Login:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  main.LoginResponse:
+    properties:
+      Password:
+        type: string
+      SessionID:
+        type: string
+      Username:
+        type: string
+      code:
+        type: string
+      description:
+        type: string
+      detail:
+        type: string
+      event_id:
+        type: string
+      transactionID:
+        type: string
+    type: object
+host: ipg.betmondenge.com
+info:
+  contact:
+    email: briantralah@gmail.com
+    name: API Support
+  description: This is a service for interacting with Vodacom's DRC MPESA SOAP Integrated
+    Payment Gateway.
+  license:
+    name: GNU GENERAL PUBLIC LICENSE
+    url: http://www.gnu.org/licenses/
+  termsOfService: https://blog.tralahm.com
+  title: DRC Mpesa Proxy (JSON-SOAP-JSON) API
+  version: "1.0"
+paths:
+  /api/v1/health:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Check Health Status
+      tags:
+      - health
+  /api/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: Login to the MPESA Ipg with the credentials and return JSON response.
+      parameters:
+      - description: Login
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/main.Login'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.LoginResponse'
+      summary: Authenticate against the Remote IPG
+      tags:
+      - login
+swagger: "2.0"
