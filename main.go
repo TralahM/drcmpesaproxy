@@ -40,6 +40,80 @@ type LoginResponse struct {
 	SessionID     string `json:"SessionID"`
 }
 
+type C2B struct {
+	Token               string
+	CustomerMSISDN      string
+	ServiceProviderCode string
+	Currency            string
+	Amount              string
+	Date                string
+	ThirdPartyReference string
+	CommandID           string
+	Language            string
+	CallBackChannel     string
+	CallBackDestination string
+	Surname             string
+	Initials            string
+}
+
+type C2BResponse struct {
+	Amount              string `json:"Amount"`
+	CallBackChannel     string `json:"CallBackChannel"`
+	CallBackDestination string `json:"CallBackDestination"`
+	Code                string `json:"code"`
+	CommandId           string `json:"CommandID"`
+	Currency            string `json:"Currency"`
+	CustomerMSISDN      string `json:"CustomerMSISDN"`
+	Date                string `json:"Date"`
+	Description         string `json:"description"`
+	Detail              string `json:"detail"`
+	EventID             string `json:"event_id"`
+	Initials            string `json:"Initials"`
+	InsightReference    string `json:"InsightReference"`
+	Language            string `json:"Language"`
+	ResponseCode        string `json:"ResponseCode"`
+	ServiceProviderCode string `json:"ServiceProviderCode"`
+	Surname             string `json:"Surname"`
+	ThirdPartyReference string `json:"ThirdPartyReference"`
+	TransactionID       string `json:"transactionID"`
+}
+
+type B2C struct {
+	Token               string
+	ServiceProviderName string
+	CustomerMSISDN      string
+	Currency            string
+	Amount              string
+	TransactionDateTime string
+	Shortcode           string
+	Language            string
+	ThirdPartyReference string
+	CallBackChannel     string
+	CallBackDestination string
+	CommandID           string
+}
+
+type B2CResponse struct {
+	Amount              string `json:"Amount"`
+	CallBackChannel     string `json:"CallBackChannel"`
+	CallBackDestination string `json:"CallBackDestination"`
+	Code                string `json:"code"`
+	CommandID           string `json:"CommandID"`
+	Currency            string `json:"Currency"`
+	CustomerMSISDN      string `json:"CustomerMSISDN"`
+	Description         string `json:"description"`
+	Detail              string `json:"detail"`
+	EventID             string `json:"event_id"`
+	InsightReference    string `json:"InsightReference"`
+	Language            string `json:"Language"`
+	ResponseCode        string `json:"ResponseCode"`
+	ServiceProviderName string `json:"ServiceProviderName"`
+	Shortcode           string `json:"Shortcode"`
+	ThirdPartyReference string `json:"ThirdPartyReference"`
+	TransactionDateTime string `json:"TransactionDateTime"`
+	TransactionID       string `json:"transactionID"`
+}
+
 // @title DRC Mpesa Proxy (JSON-SOAP-JSON) API
 // @version 1.0
 // @description This is a service for interacting with Vodacom's DRC MPESA SOAP Integrated Payment Gateway.
@@ -218,6 +292,15 @@ func (ipg *IpgHandler) Login(w http.ResponseWriter, req *http.Request) {
 
 }
 
+// C2B godoc
+// @Summary Initiate Customer to Business Transaction
+// @Description Initiate C2B Transaction
+// @Tags c2b
+// @Accept json
+// @Produce json
+// @Param credentials body C2B true "C2B"
+// @Success 201 {object} C2BResponse
+// @Router /api/v1/c2b [post]
 func (ipg *IpgHandler) C2B(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -243,6 +326,15 @@ func (ipg *IpgHandler) C2B(w http.ResponseWriter, req *http.Request) {
 
 }
 
+// B2C godoc
+// @Summary Initiate Business to Customer Transaction
+// @Description Initiate B2C Transaction
+// @Tags b2c
+// @Accept json
+// @Produce json
+// @Param credentials body B2C true "B2C"
+// @Success 201 {object} B2CResponse
+// @Router /api/v1/b2c [post]
 func (ipg *IpgHandler) B2C(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {

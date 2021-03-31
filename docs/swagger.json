@@ -17,6 +17,74 @@
     "host": "ipg.betmondenge.com",
     "basePath": "/",
     "paths": {
+        "/api/v1/b2c": {
+            "post": {
+                "description": "Initiate B2C Transaction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "b2c"
+                ],
+                "summary": "Initiate Business to Customer Transaction",
+                "parameters": [
+                    {
+                        "description": "B2C",
+                        "name": "credentials",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.B2C"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/main.B2CResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/c2b": {
+            "post": {
+                "description": "Initiate C2B Transaction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "c2b"
+                ],
+                "summary": "Initiate Customer to Business Transaction",
+                "parameters": [
+                    {
+                        "description": "C2B",
+                        "name": "credentials",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.C2B"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/main.C2BResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/health": {
             "get": {
                 "consumes": [
@@ -78,6 +146,212 @@
         }
     },
     "definitions": {
+        "main.B2C": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "callBackChannel": {
+                    "type": "string"
+                },
+                "callBackDestination": {
+                    "type": "string"
+                },
+                "commandID": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customerMSISDN": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "serviceProviderName": {
+                    "type": "string"
+                },
+                "shortcode": {
+                    "type": "string"
+                },
+                "thirdPartyReference": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "transactionDateTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.B2CResponse": {
+            "type": "object",
+            "properties": {
+                "Amount": {
+                    "type": "string"
+                },
+                "CallBackChannel": {
+                    "type": "string"
+                },
+                "CallBackDestination": {
+                    "type": "string"
+                },
+                "CommandID": {
+                    "type": "string"
+                },
+                "Currency": {
+                    "type": "string"
+                },
+                "CustomerMSISDN": {
+                    "type": "string"
+                },
+                "InsightReference": {
+                    "type": "string"
+                },
+                "Language": {
+                    "type": "string"
+                },
+                "ResponseCode": {
+                    "type": "string"
+                },
+                "ServiceProviderName": {
+                    "type": "string"
+                },
+                "Shortcode": {
+                    "type": "string"
+                },
+                "ThirdPartyReference": {
+                    "type": "string"
+                },
+                "TransactionDateTime": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                },
+                "event_id": {
+                    "type": "string"
+                },
+                "transactionID": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.C2B": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "callBackChannel": {
+                    "type": "string"
+                },
+                "callBackDestination": {
+                    "type": "string"
+                },
+                "commandID": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customerMSISDN": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "initials": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "serviceProviderCode": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "thirdPartyReference": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.C2BResponse": {
+            "type": "object",
+            "properties": {
+                "Amount": {
+                    "type": "string"
+                },
+                "CallBackChannel": {
+                    "type": "string"
+                },
+                "CallBackDestination": {
+                    "type": "string"
+                },
+                "CommandID": {
+                    "type": "string"
+                },
+                "Currency": {
+                    "type": "string"
+                },
+                "CustomerMSISDN": {
+                    "type": "string"
+                },
+                "Date": {
+                    "type": "string"
+                },
+                "Initials": {
+                    "type": "string"
+                },
+                "InsightReference": {
+                    "type": "string"
+                },
+                "Language": {
+                    "type": "string"
+                },
+                "ResponseCode": {
+                    "type": "string"
+                },
+                "ServiceProviderCode": {
+                    "type": "string"
+                },
+                "Surname": {
+                    "type": "string"
+                },
+                "ThirdPartyReference": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                },
+                "event_id": {
+                    "type": "string"
+                },
+                "transactionID": {
+                    "type": "string"
+                }
+            }
+        },
         "main.Login": {
             "type": "object",
             "properties": {

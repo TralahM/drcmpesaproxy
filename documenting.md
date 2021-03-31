@@ -35,13 +35,24 @@ type LoginResponse struct{
     vodacomgo.LoginResponse
 }
 
-// Login godoc
-// @Summary Authenticate against the Remote IPG
-// @Description Login to the MPESA Ipg with the credentials and return JSON response.
-// @Tags login
+// C2B godoc
+// @Summary Initiate Customer to Business Transaction
+// @Description Initiate C2B Transaction
+// @Tags c2b
 // @Accept json
 // @Produce json
-// @Param credentials body vodacomgo.Login true "Login"
-// @Success 201 {object} vodacomgo.LoginResponse
-// @Router /api/v1/login [post]
+// @Param credentials body C2B true "C2B"
+// @Success 201 {object} C2BResponse
+// @Router /api/v1/c2b [post]
+
+
+// B2C godoc
+// @Summary Initiate Business to Customer Transaction
+// @Description Initiate B2C Transaction
+// @Tags b2c
+// @Accept json
+// @Produce json
+// @Param credentials body B2C true "B2C"
+// @Success 201 {object} B2CResponse
+// @Router /api/v1/b2c [post]
 

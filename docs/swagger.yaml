@@ -1,5 +1,141 @@
 basePath: /
 definitions:
+  main.B2C:
+    properties:
+      amount:
+        type: string
+      callBackChannel:
+        type: string
+      callBackDestination:
+        type: string
+      commandID:
+        type: string
+      currency:
+        type: string
+      customerMSISDN:
+        type: string
+      language:
+        type: string
+      serviceProviderName:
+        type: string
+      shortcode:
+        type: string
+      thirdPartyReference:
+        type: string
+      token:
+        type: string
+      transactionDateTime:
+        type: string
+    type: object
+  main.B2CResponse:
+    properties:
+      Amount:
+        type: string
+      CallBackChannel:
+        type: string
+      CallBackDestination:
+        type: string
+      CommandID:
+        type: string
+      Currency:
+        type: string
+      CustomerMSISDN:
+        type: string
+      InsightReference:
+        type: string
+      Language:
+        type: string
+      ResponseCode:
+        type: string
+      ServiceProviderName:
+        type: string
+      Shortcode:
+        type: string
+      ThirdPartyReference:
+        type: string
+      TransactionDateTime:
+        type: string
+      code:
+        type: string
+      description:
+        type: string
+      detail:
+        type: string
+      event_id:
+        type: string
+      transactionID:
+        type: string
+    type: object
+  main.C2B:
+    properties:
+      amount:
+        type: string
+      callBackChannel:
+        type: string
+      callBackDestination:
+        type: string
+      commandID:
+        type: string
+      currency:
+        type: string
+      customerMSISDN:
+        type: string
+      date:
+        type: string
+      initials:
+        type: string
+      language:
+        type: string
+      serviceProviderCode:
+        type: string
+      surname:
+        type: string
+      thirdPartyReference:
+        type: string
+      token:
+        type: string
+    type: object
+  main.C2BResponse:
+    properties:
+      Amount:
+        type: string
+      CallBackChannel:
+        type: string
+      CallBackDestination:
+        type: string
+      CommandID:
+        type: string
+      Currency:
+        type: string
+      CustomerMSISDN:
+        type: string
+      Date:
+        type: string
+      Initials:
+        type: string
+      InsightReference:
+        type: string
+      Language:
+        type: string
+      ResponseCode:
+        type: string
+      ServiceProviderCode:
+        type: string
+      Surname:
+        type: string
+      ThirdPartyReference:
+        type: string
+      code:
+        type: string
+      description:
+        type: string
+      detail:
+        type: string
+      event_id:
+        type: string
+      transactionID:
+        type: string
+    type: object
   main.Login:
     properties:
       password:
@@ -40,6 +176,50 @@ info:
   title: DRC Mpesa Proxy (JSON-SOAP-JSON) API
   version: "1.0"
 paths:
+  /api/v1/b2c:
+    post:
+      consumes:
+      - application/json
+      description: Initiate B2C Transaction
+      parameters:
+      - description: B2C
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/main.B2C'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.B2CResponse'
+      summary: Initiate Business to Customer Transaction
+      tags:
+      - b2c
+  /api/v1/c2b:
+    post:
+      consumes:
+      - application/json
+      description: Initiate C2B Transaction
+      parameters:
+      - description: C2B
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/main.C2B'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.C2BResponse'
+      summary: Initiate Customer to Business Transaction
+      tags:
+      - c2b
   /api/v1/health:
     get:
       consumes:
