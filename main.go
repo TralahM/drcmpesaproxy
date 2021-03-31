@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
-	_ "encoding/xml"
 	"io"
 	"io/ioutil"
 	"log"
