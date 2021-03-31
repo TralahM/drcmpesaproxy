@@ -134,7 +134,7 @@ type C2B struct {
 	CallBackDestination string
 	Surname             string
 	Initials            string
-}
+} //@name C2B
 
 type C2BResponse struct {
 	Amount              string `json:"Amount"`
@@ -156,7 +156,7 @@ type C2BResponse struct {
 	Surname             string `json:"Surname"`
 	ThirdPartyReference string `json:"ThirdPartyReference"`
 	TransactionID       string `json:"transactionID"`
-}
+} //@name C2BResponse
 
 type B2C struct {
 	Token               string
@@ -171,7 +171,7 @@ type B2C struct {
 	CallBackChannel     string
 	CallBackDestination string
 	CommandID           string
-}
+} //@name B2C
 
 type B2CResponse struct {
 	Amount              string `json:"Amount"`
@@ -192,7 +192,7 @@ type B2CResponse struct {
 	ThirdPartyReference string `json:"ThirdPartyReference"`
 	TransactionDateTime string `json:"TransactionDateTime"`
 	TransactionID       string `json:"transactionID"`
-}
+} //@name B2CResponse
 
 // @title DRC MPESA Proxy REST API
 // @version 1.0

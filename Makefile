@@ -1,0 +1,3 @@
+docs:
+	swag init -g main.go
+	go install ./...

@@ -37,7 +37,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.B2C"
+                            "$ref": "#/definitions/B2C"
                         }
                     }
                 ],
@@ -45,7 +45,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/main.B2CResponse"
+                            "$ref": "#/definitions/B2CResponse"
                         }
                     }
                 }
@@ -83,7 +83,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.C2B"
+                            "$ref": "#/definitions/C2B"
                         }
                     }
                 ],
@@ -91,7 +91,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/main.C2BResponse"
+                            "$ref": "#/definitions/C2BResponse"
                         }
                     }
                 }
@@ -212,7 +212,7 @@
         }
     },
     "definitions": {
-        "main.B2C": {
+        "B2C": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -253,7 +253,7 @@
                 }
             }
         },
-        "main.B2CResponse": {
+        "B2CResponse": {
             "type": "object",
             "properties": {
                 "Amount": {
@@ -312,7 +312,7 @@
                 }
             }
         },
-        "main.C2B": {
+        "C2B": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -356,7 +356,7 @@
                 }
             }
         },
-        "main.C2BResponse": {
+        "C2BResponse": {
             "type": "object",
             "properties": {
                 "Amount": {

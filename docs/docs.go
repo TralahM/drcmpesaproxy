@@ -52,7 +52,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.B2C"
+                            "$ref": "#/definitions/B2C"
                         }
                     }
                 ],
@@ -60,7 +60,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/main.B2CResponse"
+                            "$ref": "#/definitions/B2CResponse"
                         }
                     }
                 }
@@ -98,7 +98,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.C2B"
+                            "$ref": "#/definitions/C2B"
                         }
                     }
                 ],
@@ -106,7 +106,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/main.C2BResponse"
+                            "$ref": "#/definitions/C2BResponse"
                         }
                     }
                 }
@@ -227,7 +227,7 @@ var doc = `{
         }
     },
     "definitions": {
-        "main.B2C": {
+        "B2C": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -268,7 +268,7 @@ var doc = `{
                 }
             }
         },
-        "main.B2CResponse": {
+        "B2CResponse": {
             "type": "object",
             "properties": {
                 "Amount": {
@@ -327,7 +327,7 @@ var doc = `{
                 }
             }
         },
-        "main.C2B": {
+        "C2B": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -371,7 +371,7 @@ var doc = `{
                 }
             }
         },
-        "main.C2BResponse": {
+        "C2BResponse": {
             "type": "object",
             "properties": {
                 "Amount": {

@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  main.B2C:
+  B2C:
     properties:
       amount:
         type: string
@@ -27,7 +27,7 @@ definitions:
       transactionDateTime:
         type: string
     type: object
-  main.B2CResponse:
+  B2CResponse:
     properties:
       Amount:
         type: string
@@ -66,7 +66,7 @@ definitions:
       transactionID:
         type: string
     type: object
-  main.C2B:
+  C2B:
     properties:
       amount:
         type: string
@@ -95,7 +95,7 @@ definitions:
       token:
         type: string
     type: object
-  main.C2BResponse:
+  C2BResponse:
     properties:
       Amount:
         type: string
@@ -192,14 +192,14 @@ paths:
         name: b2c
         required: true
         schema:
-          $ref: '#/definitions/main.B2C'
+          $ref: '#/definitions/B2C'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/main.B2CResponse'
+            $ref: '#/definitions/B2CResponse'
       summary: Initiate Business to Customer Transaction
       tags:
       - b2c
@@ -223,14 +223,14 @@ paths:
         name: c2b
         required: true
         schema:
-          $ref: '#/definitions/main.C2B'
+          $ref: '#/definitions/C2B'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/main.C2BResponse'
+            $ref: '#/definitions/C2BResponse'
       summary: Initiate Customer to Business Transaction
       tags:
       - c2b
