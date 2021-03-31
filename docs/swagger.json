@@ -101,10 +101,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/main.Status"
                         }
                     }
                 }
@@ -388,6 +385,14 @@
                     "type": "string"
                 },
                 "transactionID": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.Status": {
+            "type": "object",
+            "properties": {
+                "status": {
                     "type": "string"
                 }
             }

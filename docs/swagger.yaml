@@ -162,6 +162,11 @@ definitions:
       transactionID:
         type: string
     type: object
+  main.Status:
+    properties:
+      status:
+        type: string
+    type: object
 host: ipg.betmondenge.com
 info:
   contact:
@@ -230,9 +235,7 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/main.Status'
       summary: Check Health Status
       tags:
       - health

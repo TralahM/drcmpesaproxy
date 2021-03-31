@@ -116,10 +116,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/main.Status"
                         }
                     }
                 }
@@ -403,6 +400,14 @@ var doc = `{
                     "type": "string"
                 },
                 "transactionID": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.Status": {
+            "type": "object",
+            "properties": {
+                "status": {
                     "type": "string"
                 }
             }

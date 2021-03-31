@@ -29,6 +29,10 @@ type Login struct {
 	Password string
 }
 
+type Status struct {
+	Status string `json:"status"`
+}
+
 type LoginResponse struct {
 	Code          string `json:"code"`
 	Description   string `json:"description"`
@@ -248,7 +252,7 @@ func (ipg *IpgHandler) setEnv(req *http.Request) {
 // @Tags health
 // @Accept json
 // @Produce json
-// @Success 200 {object} map[string]string
+// @Success 200 {object} Status
 // @Router /api/v1/health [get]
 func (ipg *IpgHandler) Health(w http.ResponseWriter, req *http.Request) {
 	ipg.respondJSON(w, 200, map[string]string{"status": "healthy"})
