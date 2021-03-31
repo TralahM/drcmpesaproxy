@@ -27,74 +27,6 @@ definitions:
       transactionDateTime:
         type: string
     type: object
-  main.B2CAcknowledgement:
-    properties:
-      dataItem:
-        items:
-          properties:
-            name:
-              type: string
-            text:
-              type: string
-            type:
-              type: string
-            value:
-              type: string
-          type: object
-        type: array
-      text:
-        type: string
-      xmlname:
-        $ref: '#/definitions/main.Name'
-    type: object
-  main.B2CCallbackEnvelope:
-    properties:
-      body:
-        properties:
-          getGenericResult:
-            properties:
-              request:
-                properties:
-                  dataItem:
-                    items:
-                      properties:
-                        name:
-                          type: string
-                        text:
-                          type: string
-                        type:
-                          type: string
-                        value:
-                          type: string
-                      type: object
-                    type: array
-                  text:
-                    type: string
-                type: object
-              text:
-                type: string
-            type: object
-          text:
-            type: string
-        type: object
-      gen:
-        type: string
-      header:
-        properties:
-          eventID:
-            type: string
-          text:
-            type: string
-        type: object
-      soap:
-        type: string
-      soapenv:
-        type: string
-      text:
-        type: string
-      xmlname:
-        $ref: '#/definitions/main.Name'
-    type: object
   main.B2CResponse:
     properties:
       Amount:
@@ -163,65 +95,6 @@ definitions:
       token:
         type: string
     type: object
-  main.C2BAcknowledgement:
-    properties:
-      dataItem:
-        properties:
-          name:
-            type: string
-          text:
-            type: string
-          type:
-            type: string
-          value:
-            type: string
-        type: object
-      text:
-        type: string
-      xmlname:
-        $ref: '#/definitions/main.Name'
-    type: object
-  main.C2BCallbackEnvelope:
-    properties:
-      body:
-        properties:
-          getGenericResult:
-            properties:
-              request:
-                properties:
-                  dataItem:
-                    items:
-                      properties:
-                        name:
-                          type: string
-                        text:
-                          type: string
-                        type:
-                          type: string
-                        value:
-                          type: string
-                      type: object
-                    type: array
-                  text:
-                    type: string
-                type: object
-              text:
-                type: string
-            type: object
-          text:
-            type: string
-        type: object
-      gen:
-        type: string
-      soap:
-        type: string
-      soapenv:
-        type: string
-      text:
-        type: string
-      xmlname:
-        $ref: '#/definitions/main.Name'
-    type: object
   main.C2BResponse:
     properties:
       Amount:
@@ -289,11 +162,6 @@ definitions:
       transactionID:
         type: string
     type: object
-  main.Name:
-    properties:
-      space:
-        type: string
-    type: object
   main.Status:
     properties:
       status:
@@ -341,20 +209,6 @@ paths:
       - text/xml
       description: Handle CallBack for a B2C Transaction and POST JSON callback to
         client callback url
-      parameters:
-      - description: B2C
-        in: body
-        name: b2ccallback
-        required: true
-        schema:
-          $ref: '#/definitions/main.B2CCallbackEnvelope'
-      produces:
-      - text/xml
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/main.B2CAcknowledgement'
       summary: Handle CallBack for a Customer to Business Transaction
       tags:
       - b2c
@@ -386,20 +240,6 @@ paths:
       - text/xml
       description: Handle CallBack for a C2B Transaction and POST JSON callback to
         client callback url
-      parameters:
-      - description: C2B
-        in: body
-        name: c2bcallback
-        required: true
-        schema:
-          $ref: '#/definitions/main.C2BCallbackEnvelope'
-      produces:
-      - text/xml
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/main.C2BAcknowledgement'
       summary: Handle CallBack for a Customer to Business Transaction
       tags:
       - c2b

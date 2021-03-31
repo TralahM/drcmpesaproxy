@@ -463,11 +463,8 @@ func (ipg *IpgHandler) B2C(w http.ResponseWriter, req *http.Request) {
 // C2BCallBack godoc
 // @Summary Handle CallBack for a Customer to Business Transaction
 // @Description Handle CallBack for a C2B Transaction and POST JSON callback to client callback url
-// @Tags c2b
 // @Accept xml
-// @Produce xml
-// @Param c2bcallback body C2BCallbackEnvelope true "C2B"
-// @Success 200 {object} C2BAcknowledgement
+// @Tags c2b
 // @Router /api/v1/c2b_callback [post]
 func (ipg *IpgHandler) C2BCallback(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
@@ -498,9 +495,6 @@ func (ipg *IpgHandler) C2BCallback(w http.ResponseWriter, req *http.Request) {
 // @Description Handle CallBack for a B2C Transaction and POST JSON callback to client callback url
 // @Tags b2c
 // @Accept xml
-// @Produce xml
-// @Param b2ccallback body B2CCallbackEnvelope true "B2C"
-// @Success 200 {object} B2CAcknowledgement
 // @Router /api/v1/b2c_callback [post]
 func (ipg *IpgHandler) B2CCallback(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)

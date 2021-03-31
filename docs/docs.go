@@ -72,32 +72,10 @@ var doc = `{
                 "consumes": [
                     "text/xml"
                 ],
-                "produces": [
-                    "text/xml"
-                ],
                 "tags": [
                     "b2c"
                 ],
-                "summary": "Handle CallBack for a Customer to Business Transaction",
-                "parameters": [
-                    {
-                        "description": "B2C",
-                        "name": "b2ccallback",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.B2CCallbackEnvelope"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.B2CAcknowledgement"
-                        }
-                    }
-                }
+                "summary": "Handle CallBack for a Customer to Business Transaction"
             }
         },
         "/api/v1/c2b": {
@@ -140,32 +118,10 @@ var doc = `{
                 "consumes": [
                     "text/xml"
                 ],
-                "produces": [
-                    "text/xml"
-                ],
                 "tags": [
                     "c2b"
                 ],
-                "summary": "Handle CallBack for a Customer to Business Transaction",
-                "parameters": [
-                    {
-                        "description": "C2B",
-                        "name": "c2bcallback",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.C2BCallbackEnvelope"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.C2BAcknowledgement"
-                        }
-                    }
-                }
+                "summary": "Handle CallBack for a Customer to Business Transaction"
             }
         },
         "/api/v1/health": {
@@ -312,112 +268,6 @@ var doc = `{
                 }
             }
         },
-        "main.B2CAcknowledgement": {
-            "type": "object",
-            "properties": {
-                "dataItem": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "text": {
-                                "type": "string"
-                            },
-                            "type": {
-                                "type": "string"
-                            },
-                            "value": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "text": {
-                    "type": "string"
-                },
-                "xmlname": {
-                    "$ref": "#/definitions/main.Name"
-                }
-            }
-        },
-        "main.B2CCallbackEnvelope": {
-            "type": "object",
-            "properties": {
-                "body": {
-                    "type": "object",
-                    "properties": {
-                        "getGenericResult": {
-                            "type": "object",
-                            "properties": {
-                                "request": {
-                                    "type": "object",
-                                    "properties": {
-                                        "dataItem": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "name": {
-                                                        "type": "string"
-                                                    },
-                                                    "text": {
-                                                        "type": "string"
-                                                    },
-                                                    "type": {
-                                                        "type": "string"
-                                                    },
-                                                    "value": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "text": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "text": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "text": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "gen": {
-                    "type": "string"
-                },
-                "header": {
-                    "type": "object",
-                    "properties": {
-                        "eventID": {
-                            "type": "string"
-                        },
-                        "text": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "soap": {
-                    "type": "string"
-                },
-                "soapenv": {
-                    "type": "string"
-                },
-                "text": {
-                    "type": "string"
-                },
-                "xmlname": {
-                    "$ref": "#/definitions/main.Name"
-                }
-            }
-        },
         "main.B2CResponse": {
             "type": "object",
             "properties": {
@@ -521,98 +371,6 @@ var doc = `{
                 }
             }
         },
-        "main.C2BAcknowledgement": {
-            "type": "object",
-            "properties": {
-                "dataItem": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "text": {
-                            "type": "string"
-                        },
-                        "type": {
-                            "type": "string"
-                        },
-                        "value": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "text": {
-                    "type": "string"
-                },
-                "xmlname": {
-                    "$ref": "#/definitions/main.Name"
-                }
-            }
-        },
-        "main.C2BCallbackEnvelope": {
-            "type": "object",
-            "properties": {
-                "body": {
-                    "type": "object",
-                    "properties": {
-                        "getGenericResult": {
-                            "type": "object",
-                            "properties": {
-                                "request": {
-                                    "type": "object",
-                                    "properties": {
-                                        "dataItem": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "name": {
-                                                        "type": "string"
-                                                    },
-                                                    "text": {
-                                                        "type": "string"
-                                                    },
-                                                    "type": {
-                                                        "type": "string"
-                                                    },
-                                                    "value": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "text": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "text": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "text": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "gen": {
-                    "type": "string"
-                },
-                "soap": {
-                    "type": "string"
-                },
-                "soapenv": {
-                    "type": "string"
-                },
-                "text": {
-                    "type": "string"
-                },
-                "xmlname": {
-                    "$ref": "#/definitions/main.Name"
-                }
-            }
-        },
         "main.C2BResponse": {
             "type": "object",
             "properties": {
@@ -711,14 +469,6 @@ var doc = `{
                     "type": "string"
                 },
                 "transactionID": {
-                    "type": "string"
-                }
-            }
-        },
-        "main.Name": {
-            "type": "object",
-            "properties": {
-                "space": {
                     "type": "string"
                 }
             }
