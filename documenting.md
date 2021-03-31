@@ -56,3 +56,23 @@ type LoginResponse struct{
 // @Success 201 {object} B2CResponse
 // @Router /api/v1/b2c [post]
 
+// C2BCallBack godoc
+// @Summary Handle CallBack for a Customer to Business Transaction
+// @Description Handle CallBack for a C2B Transaction
+// @Tags c2b
+// @Accept xml
+// @Produce xml
+// @Param credentials body C2BCallbackEnvelope true "C2B"
+// @Success 200 {object} C2BResponse
+// @Router /api/v1/c2b_callback [post]
+
+
+// B2CCallBack godoc
+// @Summary Handle CallBack for a Customer to Business Transaction
+// @Description Handle CallBack for a B2C Transaction
+// @Tags b2c
+// @Accept xml
+// @Produce xml
+// @Param credentials body B2CCallbackEnvelope true "B2C"
+// @Success 200 {object} B2CResponse
+// @Router /api/v1/b2c_callback [post]

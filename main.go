@@ -44,6 +44,78 @@ type LoginResponse struct {
 	SessionID     string `json:"SessionID"`
 }
 
+
+type B2CAcknowledgement struct {
+	XMLName  xml.Name `xml:"response"`
+	Text     string   `xml:",chardata"`
+	DataItem []struct {
+		Text  string `xml:",chardata"`
+		Name  string `xml:"name"`
+		Type  string `xml:"type"`
+		Value string `xml:"value"`
+	} `xml:"dataItem"`
+} 
+
+type C2BAcknowledgement struct {
+	XMLName  xml.Name `xml:"response"`
+	Text     string   `xml:",chardata"`
+	DataItem struct {
+		Text  string `xml:",chardata"`
+		Name  string `xml:"name"`
+		Type  string `xml:"type"`
+		Value string `xml:"value"`
+	} `xml:"dataItem"`
+} 
+
+type B2CCallbackEnvelope struct {
+	XMLName xml.Name `xml:"Envelope"`
+	Text    string   `xml:",chardata"`
+	Soapenv string   `xml:"soapenv,attr"`
+	Soap    string   `xml:"soap,attr"`
+	Gen     string   `xml:"gen,attr"`
+	Header  struct {
+		Text    string `xml:",chardata"`
+		EventID string `xml:"EventID"`
+	} `xml:"Header"`
+	Body struct {
+		Text             string `xml:",chardata"`
+		GetGenericResult struct {
+			Text    string `xml:",chardata"`
+			Request struct {
+				Text     string `xml:",chardata"`
+				DataItem []struct {
+					Text  string `xml:",chardata"`
+					Name  string `xml:"name"`
+					Value string `xml:"value"`
+					Type  string `xml:"type"`
+				} `xml:"dataItem"`
+			} `xml:"Request"`
+		} `xml:"getGenericResult"`
+	} `xml:"Body"`
+}
+
+type C2BCallbackEnvelope struct {
+	XMLName xml.Name `xml:"Envelope"`
+	Text    string   `xml:",chardata"`
+	Soapenv string   `xml:"soapenv,attr"`
+	Soap    string   `xml:"soap,attr"`
+	Gen     string   `xml:"gen,attr"`
+	Body    struct {
+		Text             string `xml:",chardata"`
+		GetGenericResult struct {
+			Text    string `xml:",chardata"`
+			Request struct {
+				Text     string `xml:",chardata"`
+				DataItem []struct {
+					Text  string `xml:",chardata"`
+					Name  string `xml:"name"`
+					Value string `xml:"value"`
+					Type  string `xml:"type"`
+				} `xml:"dataItem"`
+			} `xml:"Request"`
+		} `xml:"getGenericResult"`
+	} `xml:"Body"`
+}
 type C2B struct {
 	Token               string
 	CustomerMSISDN      string
@@ -118,7 +190,7 @@ type B2CResponse struct {
 	TransactionID       string `json:"transactionID"`
 }
 
-// @title DRC Mpesa Proxy (JSON-SOAP-JSON) API
+// @title DRC MPESA Proxy REST API
 // @version 1.0
 // @description This is a service for interacting with Vodacom's DRC MPESA SOAP Integrated Payment Gateway.
 // @termsOfService https://blog.tralahm.com
@@ -153,7 +225,7 @@ func main() {
 			"X-Client-ThirdPartyReference",
 			"Environment",
 		},
-		ExposedHeaders:   []string{"Link", "RequestID"},
+		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
@@ -258,6 +330,13 @@ func (ipg *IpgHandler) Health(w http.ResponseWriter, req *http.Request) {
 	ipg.respondJSON(w, 200, map[string]string{"status": "healthy"})
 }
 
+// GetReady godoc
+// @Summary Check Readiness Status
+// @Tags ready
+// @Accept json
+// @Produce json
+// @Success 200 {object} Status
+// @Router /api/v1/ready [get]
 func (ipg *IpgHandler) Ready(w http.ResponseWriter, req *http.Request) {
 	ipg.respondJSON(w, 200, map[string]string{"status": "ready"})
 }
@@ -364,6 +443,15 @@ func (ipg *IpgHandler) B2C(w http.ResponseWriter, req *http.Request) {
 
 }
 
+// C2BCallBack godoc
+// @Summary Handle CallBack for a Customer to Business Transaction
+// @Description Handle CallBack for a C2B Transaction and POST JSON callback to client callback url
+// @Tags c2b
+// @Accept xml
+// @Produce xml
+// @Param credentials body C2BCallbackEnvelope true "C2B"
+// @Success 200 {object} C2BResponse
+// @Router /api/v1/c2b_callback [post]
 func (ipg *IpgHandler) C2BCallback(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -388,6 +476,15 @@ func (ipg *IpgHandler) C2BCallback(w http.ResponseWriter, req *http.Request) {
 
 }
 
+// B2CCallBack godoc
+// @Summary Handle CallBack for a Customer to Business Transaction
+// @Description Handle CallBack for a B2C Transaction and POST JSON callback to client callback url
+// @Tags b2c
+// @Accept xml
+// @Produce xml
+// @Param credentials body B2CCallbackEnvelope true "B2C"
+// @Success 200 {object} B2CResponse
+// @Router /api/v1/b2c_callback [post]
 func (ipg *IpgHandler) B2CCallback(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
