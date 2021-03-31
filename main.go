@@ -44,7 +44,6 @@ type LoginResponse struct {
 	SessionID     string `json:"SessionID"`
 }
 
-
 type B2CAcknowledgement struct {
 	XMLName  xml.Name `xml:"response"`
 	Text     string   `xml:",chardata"`
@@ -54,7 +53,7 @@ type B2CAcknowledgement struct {
 		Type  string `xml:"type"`
 		Value string `xml:"value"`
 	} `xml:"dataItem"`
-} 
+}
 
 type C2BAcknowledgement struct {
 	XMLName  xml.Name `xml:"response"`
@@ -65,7 +64,7 @@ type C2BAcknowledgement struct {
 		Type  string `xml:"type"`
 		Value string `xml:"value"`
 	} `xml:"dataItem"`
-} 
+}
 
 type B2CCallbackEnvelope struct {
 	XMLName xml.Name `xml:"Envelope"`
@@ -231,6 +230,7 @@ func main() {
 	}))
 	handler := NewIpgHandler()
 	r.Get("/api/v1/health", handler.Health)
+	r.Get("/swagger.json", handler.Swagger)
 	r.Get("/api/v1/ready", handler.Ready)
 	r.Post("/api/v1/login", handler.Login)
 	r.Post("/api/v1/c2b", handler.C2B)
@@ -317,6 +317,18 @@ func (ipg *IpgHandler) setEnv(req *http.Request) {
 	} else {
 		ipg.sandbox = true
 	}
+}
+
+// GetSwagger godoc
+// @Summary Get API Swagger Definition
+// @Tags swagger
+// @Accept json
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Router /swagger.json [get]
+func (ipg *IpgHandler) Swagger(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	http.ServeFile(w, req, "docs/swagger.json")
 }
 
 // GetHealth godoc
