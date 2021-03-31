@@ -326,7 +326,7 @@ func (ipg *IpgHandler) setEnv(req *http.Request) {
 
 // GetSwagger godoc
 // @Summary Get API Swagger Definition
-// @Tags swagger
+// @Tags internal
 // @Accept json
 // @Produce json
 // @Success 200 {object} map[string]interface{}
@@ -338,7 +338,7 @@ func (ipg *IpgHandler) Swagger(w http.ResponseWriter, req *http.Request) {
 
 // GetHealth godoc
 // @Summary Check Health Status
-// @Tags health
+// @Tags internal
 // @Accept json
 // @Produce json
 // @Success 200 {object} Status
@@ -349,7 +349,7 @@ func (ipg *IpgHandler) Health(w http.ResponseWriter, req *http.Request) {
 
 // GetReady godoc
 // @Summary Check Readiness Status
-// @Tags ready
+// @Tags internal
 // @Accept json
 // @Produce json
 // @Success 200 {object} Status
@@ -361,7 +361,7 @@ func (ipg *IpgHandler) Ready(w http.ResponseWriter, req *http.Request) {
 // Login godoc
 // @Summary Authenticate against the Remote IPG
 // @Description Login to the MPESA Ipg with the credentials and return JSON response.
-// @Tags login
+// @Tags auth
 // @Accept json
 // @Produce json
 // @Param credentials body Login true "Login"

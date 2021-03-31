@@ -133,7 +133,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "health"
+                    "internal"
                 ],
                 "summary": "Check Health Status",
                 "responses": {
@@ -156,7 +156,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "login"
+                    "auth"
                 ],
                 "summary": "Authenticate against the Remote IPG",
                 "parameters": [
@@ -189,7 +189,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ready"
+                    "internal"
                 ],
                 "summary": "Check Readiness Status",
                 "responses": {
@@ -211,7 +211,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "swagger"
+                    "internal"
                 ],
                 "summary": "Get API Swagger Definition",
                 "responses": {

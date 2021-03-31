@@ -118,7 +118,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "health"
+                    "internal"
                 ],
                 "summary": "Check Health Status",
                 "responses": {
@@ -141,7 +141,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "login"
+                    "auth"
                 ],
                 "summary": "Authenticate against the Remote IPG",
                 "parameters": [
@@ -174,7 +174,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "ready"
+                    "internal"
                 ],
                 "summary": "Check Readiness Status",
                 "responses": {
@@ -196,7 +196,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "swagger"
+                    "internal"
                 ],
                 "summary": "Get API Swagger Definition",
                 "responses": {

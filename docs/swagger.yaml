@@ -256,7 +256,7 @@ paths:
             $ref: '#/definitions/main.Status'
       summary: Check Health Status
       tags:
-      - health
+      - internal
   /api/v1/login:
     post:
       consumes:
@@ -278,7 +278,7 @@ paths:
             $ref: '#/definitions/main.LoginResponse'
       summary: Authenticate against the Remote IPG
       tags:
-      - login
+      - auth
   /api/v1/ready:
     get:
       consumes:
@@ -292,7 +292,7 @@ paths:
             $ref: '#/definitions/main.Status'
       summary: Check Readiness Status
       tags:
-      - ready
+      - internal
   /swagger.json:
     get:
       consumes:
@@ -307,5 +307,5 @@ paths:
             type: object
       summary: Get API Swagger Definition
       tags:
-      - swagger
+      - internal
 swagger: "2.0"
