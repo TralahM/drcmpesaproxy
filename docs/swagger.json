@@ -366,9 +366,6 @@
                 "Password": {
                     "type": "string"
                 },
-                "SessionID": {
-                    "type": "string"
-                },
                 "Username": {
                     "type": "string"
                 },
@@ -382,6 +379,9 @@
                     "type": "string"
                 },
                 "event_id": {
+                    "type": "string"
+                },
+                "token": {
                     "type": "string"
                 },
                 "transactionID": {

@@ -147,8 +147,6 @@ definitions:
     properties:
       Password:
         type: string
-      SessionID:
-        type: string
       Username:
         type: string
       code:
@@ -158,6 +156,8 @@ definitions:
       detail:
         type: string
       event_id:
+        type: string
+      token:
         type: string
       transactionID:
         type: string

@@ -381,9 +381,6 @@ var doc = `{
                 "Password": {
                     "type": "string"
                 },
-                "SessionID": {
-                    "type": "string"
-                },
                 "Username": {
                     "type": "string"
                 },
@@ -397,6 +394,9 @@ var doc = `{
                     "type": "string"
                 },
                 "event_id": {
+                    "type": "string"
+                },
+                "token": {
                     "type": "string"
                 },
                 "transactionID": {
