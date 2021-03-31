@@ -48,7 +48,7 @@ var doc = `{
                 "parameters": [
                     {
                         "description": "B2C",
-                        "name": "credentials",
+                        "name": "b2c",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -82,7 +82,7 @@ var doc = `{
                 "parameters": [
                     {
                         "description": "C2B",
-                        "name": "credentials",
+                        "name": "c2b",
                         "in": "body",
                         "required": true,
                         "schema": {

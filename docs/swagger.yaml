@@ -184,7 +184,7 @@ paths:
       parameters:
       - description: B2C
         in: body
-        name: credentials
+        name: b2c
         required: true
         schema:
           $ref: '#/definitions/main.B2C'
@@ -206,7 +206,7 @@ paths:
       parameters:
       - description: C2B
         in: body
-        name: credentials
+        name: c2b
         required: true
         schema:
           $ref: '#/definitions/main.C2B'

@@ -298,7 +298,7 @@ func (ipg *IpgHandler) Login(w http.ResponseWriter, req *http.Request) {
 // @Tags c2b
 // @Accept json
 // @Produce json
-// @Param credentials body C2B true "C2B"
+// @Param c2b body C2B true "C2B"
 // @Success 201 {object} C2BResponse
 // @Router /api/v1/c2b [post]
 func (ipg *IpgHandler) C2B(w http.ResponseWriter, req *http.Request) {
@@ -332,7 +332,7 @@ func (ipg *IpgHandler) C2B(w http.ResponseWriter, req *http.Request) {
 // @Tags b2c
 // @Accept json
 // @Produce json
-// @Param credentials body B2C true "B2C"
+// @Param b2c body B2C true "B2C"
 // @Success 201 {object} B2CResponse
 // @Router /api/v1/b2c [post]
 func (ipg *IpgHandler) B2C(w http.ResponseWriter, req *http.Request) {
