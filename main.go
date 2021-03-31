@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
+	_ "encoding/xml"
 	"io"
 	"io/ioutil"
 	"log"
@@ -44,9 +45,13 @@ type LoginResponse struct {
 	SessionID     string `json:"SessionID"`
 }
 
+type Name struct {
+	Space, Local string
+}
+
 type B2CAcknowledgement struct {
-	XMLName  xml.Name `xml:"response"`
-	Text     string   `xml:",chardata"`
+	XMLName  Name   `xml:"response"`
+	Text     string `xml:",chardata"`
 	DataItem []struct {
 		Text  string `xml:",chardata"`
 		Name  string `xml:"name"`
@@ -56,8 +61,8 @@ type B2CAcknowledgement struct {
 }
 
 type C2BAcknowledgement struct {
-	XMLName  xml.Name `xml:"response"`
-	Text     string   `xml:",chardata"`
+	XMLName  Name   `xml:"response"`
+	Text     string `xml:",chardata"`
 	DataItem struct {
 		Text  string `xml:",chardata"`
 		Name  string `xml:"name"`
@@ -67,11 +72,11 @@ type C2BAcknowledgement struct {
 }
 
 type B2CCallbackEnvelope struct {
-	XMLName xml.Name `xml:"Envelope"`
-	Text    string   `xml:",chardata"`
-	Soapenv string   `xml:"soapenv,attr"`
-	Soap    string   `xml:"soap,attr"`
-	Gen     string   `xml:"gen,attr"`
+	XMLName Name   `xml:"Envelope"`
+	Text    string `xml:",chardata"`
+	Soapenv string `xml:"soapenv,attr"`
+	Soap    string `xml:"soap,attr"`
+	Gen     string `xml:"gen,attr"`
 	Header  struct {
 		Text    string `xml:",chardata"`
 		EventID string `xml:"EventID"`
@@ -94,11 +99,11 @@ type B2CCallbackEnvelope struct {
 }
 
 type C2BCallbackEnvelope struct {
-	XMLName xml.Name `xml:"Envelope"`
-	Text    string   `xml:",chardata"`
-	Soapenv string   `xml:"soapenv,attr"`
-	Soap    string   `xml:"soap,attr"`
-	Gen     string   `xml:"gen,attr"`
+	XMLName Name   `xml:"Envelope"`
+	Text    string `xml:",chardata"`
+	Soapenv string `xml:"soapenv,attr"`
+	Soap    string `xml:"soap,attr"`
+	Gen     string `xml:"gen,attr"`
 	Body    struct {
 		Text             string `xml:",chardata"`
 		GetGenericResult struct {

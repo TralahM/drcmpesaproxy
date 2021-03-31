@@ -66,6 +66,40 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/b2c_callback": {
+            "post": {
+                "description": "Handle CallBack for a B2C Transaction and POST JSON callback to client callback url",
+                "consumes": [
+                    "text/xml"
+                ],
+                "produces": [
+                    "text/xml"
+                ],
+                "tags": [
+                    "b2c"
+                ],
+                "summary": "Handle CallBack for a Customer to Business Transaction",
+                "parameters": [
+                    {
+                        "description": "B2C",
+                        "name": "credentials",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.B2CCallbackEnvelope"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.B2CResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/c2b": {
             "post": {
                 "description": "Initiate C2B Transaction",
@@ -93,6 +127,40 @@ var doc = `{
                 "responses": {
                     "201": {
                         "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/main.C2BResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/c2b_callback": {
+            "post": {
+                "description": "Handle CallBack for a C2B Transaction and POST JSON callback to client callback url",
+                "consumes": [
+                    "text/xml"
+                ],
+                "produces": [
+                    "text/xml"
+                ],
+                "tags": [
+                    "c2b"
+                ],
+                "summary": "Handle CallBack for a Customer to Business Transaction",
+                "parameters": [
+                    {
+                        "description": "C2B",
+                        "name": "credentials",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.C2BCallbackEnvelope"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/main.C2BResponse"
                         }
@@ -155,6 +223,51 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/api/v1/ready": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ready"
+                ],
+                "summary": "Check Readiness Status",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Status"
+                        }
+                    }
+                }
+            }
+        },
+        "/swagger.json": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "swagger"
+                ],
+                "summary": "Get API Swagger Definition",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -196,6 +309,81 @@ var doc = `{
                 },
                 "transactionDateTime": {
                     "type": "string"
+                }
+            }
+        },
+        "main.B2CCallbackEnvelope": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "object",
+                    "properties": {
+                        "getGenericResult": {
+                            "type": "object",
+                            "properties": {
+                                "request": {
+                                    "type": "object",
+                                    "properties": {
+                                        "dataItem": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "text": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "value": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "text": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "text": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "text": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "gen": {
+                    "type": "string"
+                },
+                "header": {
+                    "type": "object",
+                    "properties": {
+                        "eventID": {
+                            "type": "string"
+                        },
+                        "text": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "soap": {
+                    "type": "string"
+                },
+                "soapenv": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "xmlname": {
+                    "$ref": "#/definitions/main.Name"
                 }
             }
         },
@@ -302,6 +490,70 @@ var doc = `{
                 }
             }
         },
+        "main.C2BCallbackEnvelope": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "object",
+                    "properties": {
+                        "getGenericResult": {
+                            "type": "object",
+                            "properties": {
+                                "request": {
+                                    "type": "object",
+                                    "properties": {
+                                        "dataItem": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "text": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "value": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "text": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "text": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "text": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "gen": {
+                    "type": "string"
+                },
+                "soap": {
+                    "type": "string"
+                },
+                "soapenv": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "xmlname": {
+                    "$ref": "#/definitions/main.Name"
+                }
+            }
+        },
         "main.C2BResponse": {
             "type": "object",
             "properties": {
@@ -381,6 +633,9 @@ var doc = `{
                 "Password": {
                     "type": "string"
                 },
+                "SessionID": {
+                    "type": "string"
+                },
                 "Username": {
                     "type": "string"
                 },
@@ -396,10 +651,15 @@ var doc = `{
                 "event_id": {
                     "type": "string"
                 },
-                "token": {
-                    "type": "string"
-                },
                 "transactionID": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.Name": {
+            "type": "object",
+            "properties": {
+                "space": {
                     "type": "string"
                 }
             }
@@ -430,7 +690,7 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "ipg.betmondenge.com",
 	BasePath:    "/",
 	Schemes:     []string{},
-	Title:       "DRC Mpesa Proxy (JSON-SOAP-JSON) API",
+	Title:       "DRC MPESA Proxy REST API",
 	Description: "This is a service for interacting with Vodacom's DRC MPESA SOAP Integrated Payment Gateway.",
 }
 

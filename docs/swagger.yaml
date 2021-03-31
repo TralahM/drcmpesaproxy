@@ -27,6 +27,54 @@ definitions:
       transactionDateTime:
         type: string
     type: object
+  main.B2CCallbackEnvelope:
+    properties:
+      body:
+        properties:
+          getGenericResult:
+            properties:
+              request:
+                properties:
+                  dataItem:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        text:
+                          type: string
+                        type:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    type: array
+                  text:
+                    type: string
+                type: object
+              text:
+                type: string
+            type: object
+          text:
+            type: string
+        type: object
+      gen:
+        type: string
+      header:
+        properties:
+          eventID:
+            type: string
+          text:
+            type: string
+        type: object
+      soap:
+        type: string
+      soapenv:
+        type: string
+      text:
+        type: string
+      xmlname:
+        $ref: '#/definitions/main.Name'
+    type: object
   main.B2CResponse:
     properties:
       Amount:
@@ -95,6 +143,47 @@ definitions:
       token:
         type: string
     type: object
+  main.C2BCallbackEnvelope:
+    properties:
+      body:
+        properties:
+          getGenericResult:
+            properties:
+              request:
+                properties:
+                  dataItem:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        text:
+                          type: string
+                        type:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    type: array
+                  text:
+                    type: string
+                type: object
+              text:
+                type: string
+            type: object
+          text:
+            type: string
+        type: object
+      gen:
+        type: string
+      soap:
+        type: string
+      soapenv:
+        type: string
+      text:
+        type: string
+      xmlname:
+        $ref: '#/definitions/main.Name'
+    type: object
   main.C2BResponse:
     properties:
       Amount:
@@ -147,6 +236,8 @@ definitions:
     properties:
       Password:
         type: string
+      SessionID:
+        type: string
       Username:
         type: string
       code:
@@ -157,9 +248,12 @@ definitions:
         type: string
       event_id:
         type: string
-      token:
-        type: string
       transactionID:
+        type: string
+    type: object
+  main.Name:
+    properties:
+      space:
         type: string
     type: object
   main.Status:
@@ -178,7 +272,7 @@ info:
     name: GNU GENERAL PUBLIC LICENSE
     url: http://www.gnu.org/licenses/
   termsOfService: https://blog.tralahm.com
-  title: DRC Mpesa Proxy (JSON-SOAP-JSON) API
+  title: DRC MPESA Proxy REST API
   version: "1.0"
 paths:
   /api/v1/b2c:
@@ -203,6 +297,29 @@ paths:
       summary: Initiate Business to Customer Transaction
       tags:
       - b2c
+  /api/v1/b2c_callback:
+    post:
+      consumes:
+      - text/xml
+      description: Handle CallBack for a B2C Transaction and POST JSON callback to
+        client callback url
+      parameters:
+      - description: B2C
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/main.B2CCallbackEnvelope'
+      produces:
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.B2CResponse'
+      summary: Handle CallBack for a Customer to Business Transaction
+      tags:
+      - b2c
   /api/v1/c2b:
     post:
       consumes:
@@ -223,6 +340,29 @@ paths:
           schema:
             $ref: '#/definitions/main.C2BResponse'
       summary: Initiate Customer to Business Transaction
+      tags:
+      - c2b
+  /api/v1/c2b_callback:
+    post:
+      consumes:
+      - text/xml
+      description: Handle CallBack for a C2B Transaction and POST JSON callback to
+        client callback url
+      parameters:
+      - description: C2B
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/main.C2BCallbackEnvelope'
+      produces:
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.C2BResponse'
+      summary: Handle CallBack for a Customer to Business Transaction
       tags:
       - c2b
   /api/v1/health:
@@ -261,4 +401,33 @@ paths:
       summary: Authenticate against the Remote IPG
       tags:
       - login
+  /api/v1/ready:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Status'
+      summary: Check Readiness Status
+      tags:
+      - ready
+  /swagger.json:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get API Swagger Definition
+      tags:
+      - swagger
 swagger: "2.0"
