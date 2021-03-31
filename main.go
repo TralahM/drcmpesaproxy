@@ -41,7 +41,7 @@ type LoginResponse struct {
 	EventID       string `json:"event_id"`
 	Username      string `json:"Username"`
 	Password      string `json:"Password"`
-	SessionID     string `json:"SessionID"`
+	SessionID     string `json:"token"`
 }
 
 type C2B struct {

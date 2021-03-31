@@ -78,6 +78,8 @@ github.com/tralahm/vodacomgo v0.0.0-20210329210107-8c36971562af h1:zvmUUeQ1EwH9p
 github.com/tralahm/vodacomgo v0.0.0-20210329210107-8c36971562af/go.mod h1:5q1p8d5vAkWbi1ErepanfLpi6yxhab/luAbymdvHmvU=
 github.com/tralahm/vodacomgo v1.0.0 h1:8kJ8Y2eJwSm6svx+8QIYDUQ/eS8Sa3qCXfBrVLhyHjw=
 github.com/tralahm/vodacomgo v1.0.0/go.mod h1:5q1p8d5vAkWbi1ErepanfLpi6yxhab/luAbymdvHmvU=
+github.com/tralahm/vodacomgo v1.0.1 h1:OovGw9QoLjlYtmCNlvIyxtD05tZK2DlVSeGOFu0PnXw=
+github.com/tralahm/vodacomgo v1.0.1/go.mod h1:5q1p8d5vAkWbi1ErepanfLpi6yxhab/luAbymdvHmvU=
 github.com/urfave/cli/v2 v2.3.0 h1:qph92Y649prgesehzOrQjdWyxFOp/QVM+6imKHad91M=
 github.com/urfave/cli/v2 v2.3.0/go.mod h1:LJmUH05zAU44vOAcrfzZQKsZbVcdbOG8rtL3/XcUArI=
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
