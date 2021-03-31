@@ -28,11 +28,11 @@ var (
 type Login struct {
 	Username string
 	Password string
-}
+} //@name Login
 
 type Status struct {
 	Status string `json:"status"`
-}
+} //@name Status
 
 type LoginResponse struct {
 	Code          string `json:"code"`
@@ -43,7 +43,7 @@ type LoginResponse struct {
 	Username      string `json:"Username"`
 	Password      string `json:"Password"`
 	SessionID     string `json:"SessionID"`
-}
+} //@name LoginResponse
 
 type Name struct {
 	Space, Local string

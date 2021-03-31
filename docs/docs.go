@@ -140,7 +140,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Status"
+                            "$ref": "#/definitions/Status"
                         }
                     }
                 }
@@ -166,7 +166,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Login"
+                            "$ref": "#/definitions/Login"
                         }
                     }
                 ],
@@ -174,7 +174,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/main.LoginResponse"
+                            "$ref": "#/definitions/LoginResponse"
                         }
                     }
                 }
@@ -196,7 +196,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Status"
+                            "$ref": "#/definitions/Status"
                         }
                     }
                 }
@@ -433,7 +433,7 @@ var doc = `{
                 }
             }
         },
-        "main.Login": {
+        "Login": {
             "type": "object",
             "properties": {
                 "password": {
@@ -444,7 +444,7 @@ var doc = `{
                 }
             }
         },
-        "main.LoginResponse": {
+        "LoginResponse": {
             "type": "object",
             "properties": {
                 "Password": {
@@ -473,7 +473,7 @@ var doc = `{
                 }
             }
         },
-        "main.Status": {
+        "Status": {
             "type": "object",
             "properties": {
                 "status": {

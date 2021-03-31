@@ -136,14 +136,14 @@ definitions:
       transactionID:
         type: string
     type: object
-  main.Login:
+  Login:
     properties:
       password:
         type: string
       username:
         type: string
     type: object
-  main.LoginResponse:
+  LoginResponse:
     properties:
       Password:
         type: string
@@ -162,7 +162,7 @@ definitions:
       transactionID:
         type: string
     type: object
-  main.Status:
+  Status:
     properties:
       status:
         type: string
@@ -253,7 +253,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.Status'
+            $ref: '#/definitions/Status'
       summary: Check Health Status
       tags:
       - internal
@@ -268,14 +268,14 @@ paths:
         name: credentials
         required: true
         schema:
-          $ref: '#/definitions/main.Login'
+          $ref: '#/definitions/Login'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/main.LoginResponse'
+            $ref: '#/definitions/LoginResponse'
       summary: Authenticate against the Remote IPG
       tags:
       - auth
@@ -289,7 +289,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.Status'
+            $ref: '#/definitions/Status'
       summary: Check Readiness Status
       tags:
       - internal

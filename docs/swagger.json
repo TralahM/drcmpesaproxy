@@ -125,7 +125,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Status"
+                            "$ref": "#/definitions/Status"
                         }
                     }
                 }
@@ -151,7 +151,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Login"
+                            "$ref": "#/definitions/Login"
                         }
                     }
                 ],
@@ -159,7 +159,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/main.LoginResponse"
+                            "$ref": "#/definitions/LoginResponse"
                         }
                     }
                 }
@@ -181,7 +181,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Status"
+                            "$ref": "#/definitions/Status"
                         }
                     }
                 }
@@ -418,7 +418,7 @@
                 }
             }
         },
-        "main.Login": {
+        "Login": {
             "type": "object",
             "properties": {
                 "password": {
@@ -429,7 +429,7 @@
                 }
             }
         },
-        "main.LoginResponse": {
+        "LoginResponse": {
             "type": "object",
             "properties": {
                 "Password": {
@@ -458,7 +458,7 @@
                 }
             }
         },
-        "main.Status": {
+        "Status": {
             "type": "object",
             "properties": {
                 "status": {
