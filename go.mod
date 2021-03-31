@@ -13,7 +13,7 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/swaggo/http-swagger v1.0.0
 	github.com/swaggo/swag v1.7.0
-	github.com/tralahm/vodacomgo v1.0.1
+	github.com/tralahm/vodacomgo v1.0.0
 	golang.org/x/net v0.0.0-20210330230544-e57232859fb2 // indirect
 	golang.org/x/tools v0.1.0 // indirect
 )
