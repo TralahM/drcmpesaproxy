@@ -44,81 +44,15 @@ type LoginResponse struct {
 	SessionID     string `json:"SessionID"`
 } //@name LoginResponse
 
-type Name struct {
-	Space, Local string
-}
+type LoginResponse2 struct {
+	Code          string `json:"code"`
+	Description   string `json:"description"`
+	Detail        string `json:"detail"`
+	TransactionID string `json:"transactionID"`
+	EventID       string `json:"event_id"`
+	Token         string `json:"token"`
+} //@name LoginResponse2
 
-type B2CAcknowledgement struct {
-	XMLName  Name   `xml:"response"`
-	Text     string `xml:",chardata"`
-	DataItem []struct {
-		Text  string `xml:",chardata"`
-		Name  string `xml:"name"`
-		Type  string `xml:"type"`
-		Value string `xml:"value"`
-	} `xml:"dataItem"`
-}
-
-type C2BAcknowledgement struct {
-	XMLName  Name   `xml:"response"`
-	Text     string `xml:",chardata"`
-	DataItem struct {
-		Text  string `xml:",chardata"`
-		Name  string `xml:"name"`
-		Type  string `xml:"type"`
-		Value string `xml:"value"`
-	} `xml:"dataItem"`
-}
-
-type B2CCallbackEnvelope struct {
-	XMLName Name   `xml:"Envelope"`
-	Text    string `xml:",chardata"`
-	Soapenv string `xml:"soapenv,attr"`
-	Soap    string `xml:"soap,attr"`
-	Gen     string `xml:"gen,attr"`
-	Header  struct {
-		Text    string `xml:",chardata"`
-		EventID string `xml:"EventID"`
-	} `xml:"Header"`
-	Body struct {
-		Text             string `xml:",chardata"`
-		GetGenericResult struct {
-			Text    string `xml:",chardata"`
-			Request struct {
-				Text     string `xml:",chardata"`
-				DataItem []struct {
-					Text  string `xml:",chardata"`
-					Name  string `xml:"name"`
-					Value string `xml:"value"`
-					Type  string `xml:"type"`
-				} `xml:"dataItem"`
-			} `xml:"Request"`
-		} `xml:"getGenericResult"`
-	} `xml:"Body"`
-}
-
-type C2BCallbackEnvelope struct {
-	XMLName Name   `xml:"Envelope"`
-	Text    string `xml:",chardata"`
-	Soapenv string `xml:"soapenv,attr"`
-	Soap    string `xml:"soap,attr"`
-	Gen     string `xml:"gen,attr"`
-	Body    struct {
-		Text             string `xml:",chardata"`
-		GetGenericResult struct {
-			Text    string `xml:",chardata"`
-			Request struct {
-				Text     string `xml:",chardata"`
-				DataItem []struct {
-					Text  string `xml:",chardata"`
-					Name  string `xml:"name"`
-					Value string `xml:"value"`
-					Type  string `xml:"type"`
-				} `xml:"dataItem"`
-			} `xml:"Request"`
-		} `xml:"getGenericResult"`
-	} `xml:"Body"`
-}
 type C2B struct {
 	Token               string
 	CustomerMSISDN      string
@@ -236,7 +170,8 @@ func main() {
 	r.Get("/api/v1/health", handler.Health)
 	r.Get("/swagger.json", handler.Swagger)
 	r.Get("/api/v1/ready", handler.Ready)
-	r.Post("/api/v1/login", handler.Login)
+	r.Post("/api/v1/login", handler.LoginV1)
+	r.Post("/api/v2/login", handler.Login)
 	r.Post("/api/v1/c2b", handler.C2B)
 	r.Post("/api/v1/b2c", handler.B2C)
 	r.Post("/api/v1/vodacash_c2b_callback", handler.C2BCallback)
@@ -360,12 +295,52 @@ func (ipg *IpgHandler) Ready(w http.ResponseWriter, req *http.Request) {
 // Login godoc
 // @Summary Authenticate against the Remote IPG
 // @Description Login to the MPESA Ipg with the credentials and return JSON response.
-// @Tags auth
+// @Tags login
+// @Accept json
+// @Produce json
+// @Param credentials body Login true "Login"
+// @Success 201 {object} LoginResponse2
+// @Router /api/v1/login [post]
+func (ipg *IpgHandler) LoginV1(w http.ResponseWriter, req *http.Request) {
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		ipg.logger.Printf("Error reading body: %v\n", err)
+		ipg.respondError(w, http.StatusBadRequest, string([]byte(err.Error())))
+		return
+	}
+	var login vodacomgo.Login
+	err = json.Unmarshal(body, &login)
+	if err != nil {
+		ipg.logger.Printf("Error reading body: %v\n", err)
+		ipg.respondError(w, http.StatusBadRequest, string([]byte(err.Error())))
+		return
+	}
+	ipg.setEnv(req)
+	loginresponse, err := ipg.ipgLogin(login)
+	if err != nil {
+		ipg.logger.Printf("Error reading body: %v\n", err)
+		ipg.respondError(w, http.StatusBadGateway, string([]byte(err.Error())))
+		return
+	}
+	var v1response map[string]string
+	v1response["code"] = loginresponse.Code
+	v1response["description"] = loginresponse.Description
+	v1response["detail"] = loginresponse.Detail
+	v1response["transactionID"] = loginresponse.TransactionID
+	v1response["event_id"] = loginresponse.EventID
+	v1response["token"] = loginresponse.SessionID
+	ipg.respondJSON(w, http.StatusCreated, v1response)
+}
+
+// Login godoc
+// @Summary Authenticate against the Remote IPG
+// @Description Login to the MPESA Ipg with the credentials and return JSON response.
+// @Tags login
 // @Accept json
 // @Produce json
 // @Param credentials body Login true "Login"
 // @Success 201 {object} LoginResponse
-// @Router /api/v1/login [post]
+// @Router /api/v2/login [post]
 func (ipg *IpgHandler) Login(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -387,7 +362,14 @@ func (ipg *IpgHandler) Login(w http.ResponseWriter, req *http.Request) {
 		ipg.respondError(w, http.StatusBadGateway, string([]byte(err.Error())))
 		return
 	}
-	ipg.respondJSON(w, http.StatusCreated, loginresponse)
+	var v2response map[string]string
+	v2response["code"] = loginresponse.Code
+	v2response["description"] = loginresponse.Description
+	v2response["detail"] = loginresponse.Detail
+	v2response["transactionID"] = loginresponse.TransactionID
+	v2response["event_id"] = loginresponse.EventID
+	v2response["sessionID"] = loginresponse.SessionID
+	ipg.respondJSON(w, http.StatusCreated, v2response)
 
 }
 
