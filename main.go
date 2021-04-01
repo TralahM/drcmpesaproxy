@@ -322,7 +322,7 @@ func (ipg *IpgHandler) LoginV1(w http.ResponseWriter, req *http.Request) {
 		ipg.respondError(w, http.StatusBadGateway, string([]byte(err.Error())))
 		return
 	}
-	var v1response map[string]string
+	v1response := map[string]string{}
 	v1response["code"] = loginresponse.Code
 	v1response["description"] = loginresponse.Description
 	v1response["detail"] = loginresponse.Detail
@@ -362,7 +362,7 @@ func (ipg *IpgHandler) Login(w http.ResponseWriter, req *http.Request) {
 		ipg.respondError(w, http.StatusBadGateway, string([]byte(err.Error())))
 		return
 	}
-	var v2response map[string]string
+	v2response := map[string]string{}
 	v2response["code"] = loginresponse.Code
 	v2response["description"] = loginresponse.Description
 	v2response["detail"] = loginresponse.Detail
