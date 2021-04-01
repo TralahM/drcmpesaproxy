@@ -1,10 +1,16 @@
-FROM golang
-ENV PORT 8080
-EXPOSE 8080
-
+FROM golang AS builder
 WORKDIR /go/src/app
 COPY . .
-
 RUN go get -d -v ./...
-RUN go install -v ./...
+RUN CGO_ENABLED=0 GOOS=linux go install -v ./...
+# RUN ls /go/bin/
+
+FROM scratch
+ENV PORT 8080
+EXPOSE 8080
+WORKDIR /root/
+COPY --from=builder /go/src/app .
+COPY --from=builder /go/bin/drcmpesaproxy /bin/drcmpesaproxy
+
 CMD ["drcmpesaproxy"]
+
