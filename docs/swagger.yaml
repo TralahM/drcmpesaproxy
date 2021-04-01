@@ -145,11 +145,7 @@ definitions:
     type: object
   LoginResponse:
     properties:
-      Password:
-        type: string
       SessionID:
-        type: string
-      Username:
         type: string
       code:
         type: string
@@ -158,6 +154,21 @@ definitions:
       detail:
         type: string
       event_id:
+        type: string
+      transactionID:
+        type: string
+    type: object
+  LoginResponseV1:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      detail:
+        type: string
+      event_id:
+        type: string
+      token:
         type: string
       transactionID:
         type: string
@@ -275,10 +286,10 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/LoginResponse'
+            $ref: '#/definitions/LoginResponseV1'
       summary: Authenticate against the Remote IPG
       tags:
-      - auth
+      - login
   /api/v1/ready:
     get:
       consumes:
@@ -293,6 +304,28 @@ paths:
       summary: Check Readiness Status
       tags:
       - internal
+  /api/v2/login:
+    post:
+      consumes:
+      - application/json
+      description: Login to the MPESA Ipg with the credentials and return JSON response.
+      parameters:
+      - description: Login
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/Login'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/LoginResponse'
+      summary: Authenticate against the Remote IPG
+      tags:
+      - login
   /swagger.json:
     get:
       consumes:

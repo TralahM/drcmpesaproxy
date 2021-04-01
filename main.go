@@ -39,8 +39,6 @@ type LoginResponse struct {
 	Detail        string `json:"detail"`
 	TransactionID string `json:"transactionID"`
 	EventID       string `json:"event_id"`
-	Username      string `json:"Username"`
-	Password      string `json:"Password"`
 	SessionID     string `json:"SessionID"`
 } //@name LoginResponse
 
@@ -51,7 +49,7 @@ type LoginResponse2 struct {
 	TransactionID string `json:"transactionID"`
 	EventID       string `json:"event_id"`
 	Token         string `json:"token"`
-} //@name LoginResponse2
+} //@name LoginResponseV1
 
 type C2B struct {
 	Token               string

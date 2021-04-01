@@ -156,7 +156,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "login"
                 ],
                 "summary": "Authenticate against the Remote IPG",
                 "parameters": [
@@ -174,7 +174,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/LoginResponse"
+                            "$ref": "#/definitions/LoginResponseV1"
                         }
                     }
                 }
@@ -197,6 +197,40 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/Status"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/login": {
+            "post": {
+                "description": "Login to the MPESA Ipg with the credentials and return JSON response.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "login"
+                ],
+                "summary": "Authenticate against the Remote IPG",
+                "parameters": [
+                    {
+                        "description": "Login",
+                        "name": "credentials",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/LoginResponse"
                         }
                     }
                 }
@@ -447,13 +481,7 @@ var doc = `{
         "LoginResponse": {
             "type": "object",
             "properties": {
-                "Password": {
-                    "type": "string"
-                },
                 "SessionID": {
-                    "type": "string"
-                },
-                "Username": {
                     "type": "string"
                 },
                 "code": {
@@ -466,6 +494,29 @@ var doc = `{
                     "type": "string"
                 },
                 "event_id": {
+                    "type": "string"
+                },
+                "transactionID": {
+                    "type": "string"
+                }
+            }
+        },
+        "LoginResponseV1": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                },
+                "event_id": {
+                    "type": "string"
+                },
+                "token": {
                     "type": "string"
                 },
                 "transactionID": {
