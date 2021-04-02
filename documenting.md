@@ -76,3 +76,5 @@ type LoginResponse struct{
 // @Param credentials body B2CCallbackEnvelope true "B2C"
 // @Success 200 {object} B2CResponse
 // @Router /api/v1/b2c_callback [post]
+
+

@@ -20,8 +20,8 @@ import (
 
 var (
 	ServPort       = getEnv("PORT", "8000")
-	c2bCallbackUrl = getEnv("CLIENT_C2B_CALLBACK_URL", "https://api.betmondenge.com/en/api/c2b_vodacash/")
-	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://api.betmondenge.com/en/api/b2c_vodacash/")
+	c2bCallbackUrl = getEnv("CLIENT_C2B_CALLBACK_URL", "https://c2b_vodacash/")
+	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://b2c_vodacash/")
 )
 
 type Login struct {
