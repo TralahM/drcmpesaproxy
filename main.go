@@ -287,7 +287,7 @@ func (ipg *IpgHandler) Health(w http.ResponseWriter, req *http.Request) {
 // @Success 200 {object} Status
 // @Router /api/v1/ready [get]
 func (ipg *IpgHandler) Ready(w http.ResponseWriter, req *http.Request) {
-	ipg.respondJSON(w, 200, map[string]string{"status": "ready"})
+	ipg.respondJSON(w, 200, map[string]string{"status": "ready", "c2b": c2bCallbackUrl, "b2c": b2cCallbackUrl})
 }
 
 // Login godoc
