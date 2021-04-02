@@ -24,107 +24,6 @@ var (
 	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://b2c_vodacash/")
 )
 
-type Login struct {
-	Username string
-	Password string
-} //@name Login
-
-type Status struct {
-	Status string `json:"status"`
-} //@name Status
-
-type LoginResponse struct {
-	Code          string `json:"code"`
-	Description   string `json:"description"`
-	Detail        string `json:"detail"`
-	TransactionID string `json:"transactionID"`
-	EventID       string `json:"event_id"`
-	SessionID     string `json:"SessionID"`
-} //@name LoginResponse
-
-type LoginResponse2 struct {
-	Code          string `json:"code"`
-	Description   string `json:"description"`
-	Detail        string `json:"detail"`
-	TransactionID string `json:"transactionID"`
-	EventID       string `json:"event_id"`
-	Token         string `json:"token"`
-} //@name LoginResponseV1
-
-type C2B struct {
-	Token               string
-	CustomerMSISDN      string
-	ServiceProviderCode string
-	Currency            string
-	Amount              string
-	Date                string
-	ThirdPartyReference string
-	CommandID           string
-	Language            string
-	CallBackChannel     string
-	CallBackDestination string
-	Surname             string
-	Initials            string
-} //@name C2B
-
-type C2BResponse struct {
-	Amount              string `json:"Amount"`
-	CallBackChannel     string `json:"CallBackChannel"`
-	CallBackDestination string `json:"CallBackDestination"`
-	Code                string `json:"code"`
-	CommandId           string `json:"CommandID"`
-	Currency            string `json:"Currency"`
-	CustomerMSISDN      string `json:"CustomerMSISDN"`
-	Date                string `json:"Date"`
-	Description         string `json:"description"`
-	Detail              string `json:"detail"`
-	EventID             string `json:"event_id"`
-	Initials            string `json:"Initials"`
-	InsightReference    string `json:"InsightReference"`
-	Language            string `json:"Language"`
-	ResponseCode        string `json:"ResponseCode"`
-	ServiceProviderCode string `json:"ServiceProviderCode"`
-	Surname             string `json:"Surname"`
-	ThirdPartyReference string `json:"ThirdPartyReference"`
-	TransactionID       string `json:"transactionID"`
-} //@name C2BResponse
-
-type B2C struct {
-	Token               string
-	ServiceProviderName string
-	CustomerMSISDN      string
-	Currency            string
-	Amount              string
-	TransactionDateTime string
-	Shortcode           string
-	Language            string
-	ThirdPartyReference string
-	CallBackChannel     string
-	CallBackDestination string
-	CommandID           string
-} //@name B2C
-
-type B2CResponse struct {
-	Amount              string `json:"Amount"`
-	CallBackChannel     string `json:"CallBackChannel"`
-	CallBackDestination string `json:"CallBackDestination"`
-	Code                string `json:"code"`
-	CommandID           string `json:"CommandID"`
-	Currency            string `json:"Currency"`
-	CustomerMSISDN      string `json:"CustomerMSISDN"`
-	Description         string `json:"description"`
-	Detail              string `json:"detail"`
-	EventID             string `json:"event_id"`
-	InsightReference    string `json:"InsightReference"`
-	Language            string `json:"Language"`
-	ResponseCode        string `json:"ResponseCode"`
-	ServiceProviderName string `json:"ServiceProviderName"`
-	Shortcode           string `json:"Shortcode"`
-	ThirdPartyReference string `json:"ThirdPartyReference"`
-	TransactionDateTime string `json:"TransactionDateTime"`
-	TransactionID       string `json:"transactionID"`
-} //@name B2CResponse
-
 // @title DRC MPESA Proxy REST API
 // @version 1.0
 // @description This is a service for interacting with Vodacom's DRC MPESA SOAP Integrated Payment Gateway.
@@ -516,12 +415,15 @@ func (ipg *IpgHandler) respondError(w http.ResponseWriter, code int, message str
 	ipg.respondJSON(w, code, map[string]string{"error": message})
 }
 
+// respondXML makes an xml response to the responsewriter using the statuscode
+// and payload.
 func (ipg *IpgHandler) respondXML(w http.ResponseWriter, status int, payload []byte) {
 	w.Header().Set("Content-Type", "application/xml")
 	w.WriteHeader(status)
 	w.Write(payload)
 }
 
+// ipgLogin Does the actual login to the ipg and decodes the xml response
 func (ipg *IpgHandler) ipgLogin(loginStruct vodacomgo.Login) (vodacomgo.LoginResponse, error) {
 	endpoint := ":8091/insight/SOAPIn"
 	addr := ipg.getIpgUrl(false) + endpoint
@@ -542,6 +444,7 @@ func (ipg *IpgHandler) ipgLogin(loginStruct vodacomgo.Login) (vodacomgo.LoginRes
 	}
 }
 
+// ipgC2B Does the actual C2B to the ipg and decodes the xml response
 func (ipg *IpgHandler) ipgC2B(c2b vodacomgo.C2B) (vodacomgo.C2BResponse, error) {
 	endpoint := ":8091/insight/SOAPIn"
 	addr := ipg.getIpgUrl(false) + endpoint
@@ -558,6 +461,7 @@ func (ipg *IpgHandler) ipgC2B(c2b vodacomgo.C2B) (vodacomgo.C2BResponse, error) 
 	}
 }
 
+// ipgB2C Does the actual B2C to the ipg and decodes the xml response
 func (ipg *IpgHandler) ipgB2C(b2c vodacomgo.B2C) (vodacomgo.B2CResponse, error) {
 	endpoint := ":8094/iPG/B2C"
 	addr := ipg.getIpgUrl(false) + endpoint
@@ -574,6 +478,8 @@ func (ipg *IpgHandler) ipgB2C(b2c vodacomgo.B2C) (vodacomgo.B2CResponse, error) 
 	}
 }
 
+// remotePost is a helper function that does a post request with the data as
+// body to the specified address.
 func (ipg *IpgHandler) remotePost(addr string, data io.Reader) ([]byte, error) {
 	request, err := http.NewRequest(http.MethodPost, addr, data)
 	if err != nil {
@@ -596,6 +502,7 @@ func (ipg *IpgHandler) remotePost(addr string, data io.Reader) ([]byte, error) {
 
 }
 
+// forwardCallback post some parsed callback to the client's specified url.
 func (ipg *IpgHandler) forwardCallback(addr string, data io.Reader) error {
 	request, err := http.NewRequest(http.MethodPost, addr, data)
 	if err != nil {
@@ -616,3 +523,104 @@ func (ipg *IpgHandler) forwardCallback(addr string, data io.Reader) error {
 	}
 	return nil
 }
+
+type Login struct {
+	Username string
+	Password string
+} //@name Login
+
+type Status struct {
+	Status string `json:"status"`
+} //@name Status
+
+type LoginResponse struct {
+	Code          string `json:"code"`
+	Description   string `json:"description"`
+	Detail        string `json:"detail"`
+	TransactionID string `json:"transactionID"`
+	EventID       string `json:"event_id"`
+	SessionID     string `json:"SessionID"`
+} //@name LoginResponse
+
+type LoginResponse2 struct {
+	Code          string `json:"code"`
+	Description   string `json:"description"`
+	Detail        string `json:"detail"`
+	TransactionID string `json:"transactionID"`
+	EventID       string `json:"event_id"`
+	Token         string `json:"token"`
+} //@name LoginResponseV1
+
+type C2B struct {
+	Token               string
+	CustomerMSISDN      string
+	ServiceProviderCode string
+	Currency            string
+	Amount              string
+	Date                string
+	ThirdPartyReference string
+	CommandID           string
+	Language            string
+	CallBackChannel     string
+	CallBackDestination string
+	Surname             string
+	Initials            string
+} //@name C2B
+
+type C2BResponse struct {
+	Amount              string `json:"Amount"`
+	CallBackChannel     string `json:"CallBackChannel"`
+	CallBackDestination string `json:"CallBackDestination"`
+	Code                string `json:"code"`
+	CommandId           string `json:"CommandID"`
+	Currency            string `json:"Currency"`
+	CustomerMSISDN      string `json:"CustomerMSISDN"`
+	Date                string `json:"Date"`
+	Description         string `json:"description"`
+	Detail              string `json:"detail"`
+	EventID             string `json:"event_id"`
+	Initials            string `json:"Initials"`
+	InsightReference    string `json:"InsightReference"`
+	Language            string `json:"Language"`
+	ResponseCode        string `json:"ResponseCode"`
+	ServiceProviderCode string `json:"ServiceProviderCode"`
+	Surname             string `json:"Surname"`
+	ThirdPartyReference string `json:"ThirdPartyReference"`
+	TransactionID       string `json:"transactionID"`
+} //@name C2BResponse
+
+type B2C struct {
+	Token               string
+	ServiceProviderName string
+	CustomerMSISDN      string
+	Currency            string
+	Amount              string
+	TransactionDateTime string
+	Shortcode           string
+	Language            string
+	ThirdPartyReference string
+	CallBackChannel     string
+	CallBackDestination string
+	CommandID           string
+} //@name B2C
+
+type B2CResponse struct {
+	Amount              string `json:"Amount"`
+	CallBackChannel     string `json:"CallBackChannel"`
+	CallBackDestination string `json:"CallBackDestination"`
+	Code                string `json:"code"`
+	CommandID           string `json:"CommandID"`
+	Currency            string `json:"Currency"`
+	CustomerMSISDN      string `json:"CustomerMSISDN"`
+	Description         string `json:"description"`
+	Detail              string `json:"detail"`
+	EventID             string `json:"event_id"`
+	InsightReference    string `json:"InsightReference"`
+	Language            string `json:"Language"`
+	ResponseCode        string `json:"ResponseCode"`
+	ServiceProviderName string `json:"ServiceProviderName"`
+	Shortcode           string `json:"Shortcode"`
+	ThirdPartyReference string `json:"ThirdPartyReference"`
+	TransactionDateTime string `json:"TransactionDateTime"`
+	TransactionID       string `json:"transactionID"`
+} //@name B2CResponse
