@@ -16,5 +16,5 @@ COPY --from=builder /go/src/app .
 COPY --from=builder /go/bin/drcmpesaproxy /bin/drcmpesaproxy
 COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
-CMD ["drcmpesaproxy"]
+ENTRYPOINT ["drcmpesaproxy"]
 
