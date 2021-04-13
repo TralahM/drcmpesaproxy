@@ -39,9 +39,9 @@ func main() {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.StripSlashes)
-	r.Use(middleware.Logger)
 	r.Use(middleware.Heartbeat("/ping"))
 	r.Use(middleware.Recoverer)
+	r.Use(middleware.Logger)
 
 	r.Use(cors.Handler(cors.Options{
 		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
