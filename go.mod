@@ -9,6 +9,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.2 // indirect
 	github.com/go-chi/cors v1.2.0
 	github.com/go-openapi/spec v0.20.3 // indirect
+	github.com/go-redis/redis/v8 v8.8.0
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/swaggo/http-swagger v1.0.0

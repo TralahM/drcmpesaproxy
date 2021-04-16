@@ -22,7 +22,11 @@ var (
 	ServPort       = getEnv("PORT", "8000")
 	c2bCallbackUrl = getEnv("CLIENT_C2B_CALLBACK_URL", "https://c2b_vodacash/")
 	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://b2c_vodacash/")
+	redisUrl       = getEnv("REDIS_URL", "redis://localhost:6379/0")
 )
+
+func init() {
+}
 
 // @title DRC MPESA Proxy REST API
 // @version 1.0
@@ -44,7 +48,6 @@ func main() {
 	r.Use(middleware.Logger)
 
 	r.Use(cors.Handler(cors.Options{
-		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
 		AllowedOrigins: []string{"https://*", "http://*", "*"},
 		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -63,6 +66,7 @@ func main() {
 		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
+
 	handler := NewIpgHandler()
 	r.Get("/api/v1/health", handler.Health)
 	r.Get("/swagger.json", handler.Swagger)
@@ -128,14 +132,23 @@ type IpgHandler struct {
 	client   Client
 	logger   *log.Logger
 	sandbox  bool
+	DB       *Database
 }
 
 func NewIpgHandler() *IpgHandler {
 	logger := log.New(os.Stdout, "drcmpesaproxy: ", log.Ldate|log.Ltime|log.Lshortfile)
+	DB, err := NewDatabase(redisUrl, "")
+	if err != nil {
+		log.Fatalln(err)
+		panic(err)
+	}
+	DB.Set("CLIENT_C2B_CALLBACK_URL", "https://c2b_vodacash/")
+	DB.Set("CLIENT_B2C_CALLBACK_URL", "https://b2c_vodacash/")
 	hs := &IpgHandler{
 		client:  Decorate(http.DefaultClient, Header("Accept", "application/xml,text/xml")),
 		logger:  logger,
 		sandbox: false,
+		DB:      DB,
 	}
 	return hs
 }
@@ -294,6 +307,9 @@ func (ipg *IpgHandler) C2B(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	ipg.setEnv(req)
+	clientcallback := c2b.CallBackDestination
+	clientref := c2b.ThirdPartyReference
+	ipg.DB.Set(clientref, clientcallback)
 	c2bresponse, err := ipg.ipgC2B(c2b)
 	if err != nil {
 		ipg.logger.Printf("Error reading body: %v\n", err)
@@ -328,6 +344,9 @@ func (ipg *IpgHandler) B2C(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	ipg.setEnv(req)
+	clientcallback := b2c.CallBackDestination
+	clientref := b2c.ThirdPartyReference
+	ipg.DB.Set(clientref, clientcallback)
 	b2cresponse, err := ipg.ipgB2C(b2c)
 	if err != nil {
 		ipg.logger.Printf("Error reading body: %v\n", err)
@@ -361,6 +380,7 @@ func (ipg *IpgHandler) C2BCallback(w http.ResponseWriter, req *http.Request) {
 	}
 	data := new(bytes.Buffer)
 	data.Write(jsonstr)
+	c2bCallbackUrl = ipg.DB.Get(cb.ThirdPartyReference).(string)
 	err = ipg.forwardCallback(c2bCallbackUrl, data)
 	if err != nil {
 		ipg.logger.Printf("error forwarding callback %v\n", err)
@@ -391,6 +411,7 @@ func (ipg *IpgHandler) B2CCallback(w http.ResponseWriter, req *http.Request) {
 	}
 	data := new(bytes.Buffer)
 	data.Write(jsonstr)
+	b2cCallbackUrl = ipg.DB.Get(cb.ThirdPartyReference).(string)
 	err = ipg.forwardCallback(b2cCallbackUrl, data)
 	if err != nil {
 		ipg.logger.Printf("error forwarding callback %v\n", err)
