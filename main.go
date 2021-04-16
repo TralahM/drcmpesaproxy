@@ -22,7 +22,9 @@ var (
 	ServPort       = getEnv("PORT", "8000")
 	c2bCallbackUrl = getEnv("CLIENT_C2B_CALLBACK_URL", "https://c2b_vodacash/")
 	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://b2c_vodacash/")
-	redisUrl       = getEnv("REDIS_URL", "persist-ipg.drc.betmondenge.com:6379")
+	redisUrl       = getEnv("REDIS_URL", "localhost:6379")
+	internalC2B    = "https://ipg.betmondenge.com/api/v1/c2b_callback"
+	internalB2C    = "https://ipg.betmondenge.com/api/v1/b2c_callback"
 )
 
 func init() {
@@ -309,6 +311,8 @@ func (ipg *IpgHandler) C2B(w http.ResponseWriter, req *http.Request) {
 	ipg.setEnv(req)
 	clientcallback := c2b.CallBackDestination
 	clientref := c2b.ThirdPartyReference
+	c2b.CallBackChannel = "2"
+	c2b.CallBackDestination = internalC2B
 	ipg.DB.Set(clientref, clientcallback)
 	c2bresponse, err := ipg.ipgC2B(c2b)
 	if err != nil {
@@ -346,6 +350,8 @@ func (ipg *IpgHandler) B2C(w http.ResponseWriter, req *http.Request) {
 	ipg.setEnv(req)
 	clientcallback := b2c.CallBackDestination
 	clientref := b2c.ThirdPartyReference
+	b2c.CallBackChannel = "2"
+	b2c.CallBackDestination = internalB2C
 	ipg.DB.Set(clientref, clientcallback)
 	b2cresponse, err := ipg.ipgB2C(b2c)
 	if err != nil {
