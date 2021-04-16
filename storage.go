@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"log"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -41,6 +42,7 @@ func (db Database) Get(key string) interface{} {
 	if err != nil {
 		return err
 	}
+	log.Println("Got key: ", key)
 	return val
 }
 func (db Database) Set(key string, value interface{}) error {
@@ -48,5 +50,6 @@ func (db Database) Set(key string, value interface{}) error {
 	if err != nil {
 		return err
 	}
+	log.Println("Set key: ", key)
 	return nil
 }
