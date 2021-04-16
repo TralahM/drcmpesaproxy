@@ -18,11 +18,16 @@ type Database struct {
 }
 
 func NewDatabase(address, password string) (*Database, error) {
-	opts, err := redis.ParseURL(redisUrl)
-	if err != nil {
-		return nil, err
+	// opts, err := redis.ParseURL(redisUrl)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	nopts := &redis.Options{
+		Addr:     redisUrl,
+		Password: password,
+		DB:       0,
 	}
-	client := redis.NewClient(opts)
+	client := redis.NewClient(nopts)
 	if err := client.Ping(Ctx).Err(); err != nil {
 		return nil, err
 	}

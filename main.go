@@ -22,7 +22,7 @@ var (
 	ServPort       = getEnv("PORT", "8000")
 	c2bCallbackUrl = getEnv("CLIENT_C2B_CALLBACK_URL", "https://c2b_vodacash/")
 	b2cCallbackUrl = getEnv("CLIENT_B2C_CALLBACK_URL", "https://b2c_vodacash/")
-	redisUrl       = getEnv("REDIS_URL", "redis://localhost:6379/0")
+	redisUrl       = getEnv("REDIS_URL", "persist-ipg.drc.betmondenge.com:6379")
 )
 
 func init() {
@@ -137,7 +137,7 @@ type IpgHandler struct {
 
 func NewIpgHandler() *IpgHandler {
 	logger := log.New(os.Stdout, "drcmpesaproxy: ", log.Ldate|log.Ltime|log.Lshortfile)
-	DB, err := NewDatabase(redisUrl, "")
+	DB, err := NewDatabase(redisUrl, "drcmpesaproxy")
 	if err != nil {
 		log.Fatalln(err)
 		panic(err)
