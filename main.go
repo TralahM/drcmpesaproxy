@@ -139,7 +139,7 @@ type IpgHandler struct {
 
 func NewIpgHandler() *IpgHandler {
 	logger := log.New(os.Stdout, "drcmpesaproxy: ", log.Ldate|log.Ltime|log.Lshortfile)
-	DB, err := NewDatabase(redisUrl, "drcmpesaproxy")
+	DB, err := NewDatabase(redisUrl, "bmb@2021")
 	if err != nil {
 		log.Fatalln(err)
 		panic(err)
@@ -147,7 +147,10 @@ func NewIpgHandler() *IpgHandler {
 	DB.Set("CLIENT_C2B_CALLBACK_URL", "https://c2b_vodacash/")
 	DB.Set("CLIENT_B2C_CALLBACK_URL", "https://b2c_vodacash/")
 	hs := &IpgHandler{
-		client:  Decorate(http.DefaultClient, Header("Accept", "application/xml,text/xml")),
+		client: Decorate(http.DefaultClient,
+			Header("Accept", "application/xml,text/xml"),
+			Header("Content-Type", "application/xml"),
+		),
 		logger:  logger,
 		sandbox: false,
 		DB:      DB,
