@@ -71,7 +71,7 @@ func main() {
 
 	handler := NewIpgHandler()
 	r.Get("/", func(writer http.ResponseWriter, req *http.Request) {
-		http.Redirect(writer, req, "https://mpegaipg.drc.betmondenge.com/swagger/index.html", http.StatusMovedPermanently)
+		http.Redirect(writer, req, "https://mpesaipg.drc.betmondenge.com/swagger/index.html", http.StatusMovedPermanently)
 	})
 	r.Get("/api/v1/health", handler.Health)
 	r.Get("/swagger.json", handler.Swagger)
